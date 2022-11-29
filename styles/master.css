@@ -1,0 +1,97 @@
+@import url("reset.css"); /*Adding the reset stylesheet*/
+
+body{
+    background-color: #777;
+}
+header{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    background-color: rgb(21, 71, 52);
+    color: white;
+}
+
+h1{
+    font-size: x-large;
+    padding-top: 2em;
+    font-weight: 700;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.startnend{
+    background-color: #B15533;
+    padding: 2em;
+    border: .5em solid black;
+    border-radius: 2em;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start,.end,.submit{
+    padding: .5em;
+    color: white;
+    text-shadow: 0.1em 0px 1px #333;
+    margin: .2em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self:stretch;
+}
+
+.buttons{
+    border: .2em double #000;
+}
+
+.startnend input{
+    border: .2em solid black;
+    border-radius: .5em;
+    padding: .5em;
+    font-weight: 500;
+    text-align: center;
+    margin-top: .5em;
+}
+
+.linksnsocial{
+    padding-left:8em;
+    margin:4em;
+    border-left: .5em solid black;
+}
+
+ul{
+    list-style:disc;
+    padding:1.5em;
+}
+ul li{
+    padding:.2em
+}
+section{
+    padding-top:2em;
+    background-color: #B15533;
+    padding: 2em;
+    border: .5em solid black;
+    border-radius: 2em;
+    margin: 1em;
+}
+
+section a, section h2{
+    color: white;
+    text-decoration: none;
+}
+
+section h2{
+    font-size: larger;
+    font-weight: 600;
+}
+
+section i{
+    padding: .5em;
+}
