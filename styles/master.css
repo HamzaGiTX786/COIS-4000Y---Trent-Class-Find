@@ -1,7 +1,12 @@
 @import url("reset.css"); /*Adding the reset stylesheet*/
 
+
 body{
     background-color: #777;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
 }
 header{
     display: flex;
@@ -9,6 +14,7 @@ header{
     flex-direction: row;
     background-color: rgb(21, 71, 52);
     color: white;
+    margin-bottom: 2em;
 }
 
 h1{
@@ -17,11 +23,26 @@ h1{
     font-weight: 700;
 }
 
-main{
+a{
+    text-decoration: none;
+}
+
+footer{
     display: flex;
     flex-direction: row;
+    align-items:flex-end;
+    justify-content:center;
+    flex-grow: 1;
+}
+
+main{
+    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
+    margin-bottom: 4em;
+    flex-direction: column;
+    justify-self: stretch;
+    flex-grow: 1;
 }
 
 .startnend{
@@ -49,9 +70,14 @@ main{
 
 .buttons{
     border: .2em double #000;
+    margin: .5em;
 }
 
-.startnend input{
+button:hover{
+    cursor:pointer;
+}
+
+.startnend input,.buildingselector select{
     border: .2em solid black;
     border-radius: .5em;
     padding: .5em;
@@ -61,33 +87,59 @@ main{
 }
 
 .linksnsocial{
-    padding-left:8em;
-    margin:4em;
-    border-left: .5em solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding:2em;
+    background-color: #B15533;
+    padding-bottom: .5em;
+    border: .5em solid black;
+    border-radius: 2em;
+    margin: 1em;
+    flex-grow: 1;
+    align-items: flex-end;
 }
 
-ul{
-    list-style:disc;
-    padding:1.5em;
+.buildingselector{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
-ul li{
-    padding:.2em
-}
-section{
-    padding-top:2em;
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding:2em;
     background-color: #B15533;
-    padding: 2em;
+    padding-bottom: .5em;
     border: .5em solid black;
     border-radius: 2em;
     margin: 1em;
 }
 
-section a, section h2{
-    color: white;
-    text-decoration: none;
+ul,p{
+    list-style:disc;
+    padding:1.5em;
 }
 
-section h2{
+section.links ul li{
+    padding:.4em
+}
+ul li{
+    padding:.2em
+}
+
+
+section a, section h2, .wrapper h2{
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+section h2, .wrapper h2{
     font-size: larger;
     font-weight: 600;
 }
@@ -95,3 +147,23 @@ section h2{
 section i{
     padding: .5em;
 }
+
+.navmain{
+    display: flex;
+}
+
+nav{
+    justify-content: flex-start;
+    background-color: #fff;
+    border: .5em solid black;
+    padding: 1em;
+    border-radius: 2em;
+    margin-left: .3em;
+}
+
+nav a{
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+}
+
