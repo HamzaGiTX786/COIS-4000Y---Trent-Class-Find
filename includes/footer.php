@@ -1,44 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/master.css"/>
-    <script src="https://kit.fontawesome.com/e156dbae2b.js" crossorigin="anonymous"></script>
-    <title>Admin Login:Trent Class Find</title>
-</head>
-<body>
-    <a href="index.html"><header>
-        <img src="img/Trent.png" alt="Logo of Trent University, with a green background with the font colour of white">
-        <h1>&VerticalBar; Trent Class Find</h1>
-    </header></a>
-    <div class="navmain">
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="pickaroom.html">Pick a Room</a></li>
-            <li><a href="admin.html">Admin Login</a></li>
-        </ul>
-    </nav>
-    <main>
-        <div class="startnend">
-            <div class="start">
-                <label for="username">Enter your Username:</label>
-                <input type="text" name="username" id="username" placeholder="Enter your username here" value=""/>
-            </div>
-            <div class="end">
-                <label for="endpoint">Enter your password:</label>
-                <input type="text" name="password" id="password" placeholder="Enter your password here" value="" required/> 
-            </div>
-
-            <div class="buttons">
-                <button type="submit" name="submit" id="submit">Sign In</button>
-            </div>
-        </div>
-    </main>
-</div>
-    <footer>
+<footer>
         <div class="linksnsocial">
             <section class="links">
             <h2>Links</h2>
@@ -63,5 +23,3 @@
             </section>
         </div>
     </footer>
-</body>
-</html>

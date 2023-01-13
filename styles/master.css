@@ -9,6 +9,7 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     flex-grow: 1;
 }
+
 header{
     display: flex;
     justify-content: flex-start;
@@ -46,7 +47,7 @@ main{
     flex-grow: 1;
 }
 
-.startnend{
+form{
     background-color: #B15533;
     padding: 2em;
     border: .5em solid black;
@@ -78,7 +79,7 @@ button:hover{
     cursor:pointer;
 }
 
-.startnend input,.buildingselector select{
+.startnend input,.buildingselector select,form input{
     border: .2em solid black;
     border-radius: .5em;
     padding: .5em;
@@ -167,4 +168,12 @@ nav a{
     color: #000;
     text-decoration: none;
     text-align: center;
+}
+
+.hidden{
+    display: none;
+}
+
+.error{
+    color: red;
 }
