@@ -2,7 +2,7 @@
 $servername = "localhost";
 $database = "classfind";
 $username = "classfind";
-$pass = "Group8@Classfind";
+$pass = "Classfind@Group8";
 // Create connection
 $conn = mysqli_connect($servername, $username, $pass, $database);
 // Check connection
