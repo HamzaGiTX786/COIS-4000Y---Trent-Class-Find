@@ -1,98 +1,92 @@
 <?php
 
 class Node{
-  public $name; 
-  public $neighbours = array();
-  public $distance;
-
-  function __construct(String $name) {
-    $this->name = $name;
-  }
-
-  public function AddDest(Node $neighbour,$distance)
-  {
-    $this->distance = $distance;
-    array_push($this->neighbours,$neighbour);
-  }
-
-
+public $name; 
+public $neighbours = array();
+public $distance;
+  
+function __construct(String $name) {
+  $this->name = $name;
 }
-
+  
+public function AddDest(Node $neighbour,$distance)
+{
+  $neighbour->distance = $distance;
+  array_push($this->neighbours,$neighbour);
+}
+  
+}
+  
 class Map{
+  
+  private $list;
+  private $visited;
+  private $shortestpath;
+  private $shortestpath_nodes;
+  
+  function __construct(){
+    $this->list = array();
+    $this->shortestpath = PHP_INT_MAX;
+    $this->shortestpath_nodes = array();
+  }
+  
+  public function AddNode(Node $a){ // adds the buildings to the list of buildings
+    array_push($this->list,$a);
+  }
+  
+  public function AddRoute(Node $orgin, Node $des, $distance) // adds an edge between the 2 node
+  {
+    $orgin->AddDest($des,$distance);
+  }
+  
+  private function BFS(Node $orgin, Node $destination, $path,$dist) //Helper function that actually find the shorest path
+  {
+    if($dist>$this->shortestpath)
+        return;
 
-    private $list;
-    private $visited;
-    private $shortestpath;
-
-
-
-    function __construct() {
-        $this->list = array();
-        $this->shortestpath = 10000;
-    }
-
-    public function AddNode(Node $a){ // add the building in the list of other buildings
-       array_push($this->list,$a);
-    }
-
-    public function AddRoute(Node $orgin, Node $des, $distance) // add a route b/w origin and destination 
-    {
-        $orgin->AddDest($des,$distance);
-    }
-
-    private function BFS(Node $orgin, Node $destination, String $path) // helping function that find the shortest path
-    {
-        foreach($orgin->neighbours as $des){
-        
-            $i = array_search($des,$this->list);
-
-            if($this->visited[$i] == false)
-            {
-                if($des->distance < $this->shortestpath) {
-                    $this->shortestpath = $des->distance;
-                    $path = $path." - ".$des->name;
-                }
-                if($des == $destination){
-                    $this->visited[$i] = true;
-                    return $path;
-                }
-                $this->visited[$i] = true;
-            }  
+    if($orgin->name == $destination->name){
+        if($dist<$this->shortestpath)
+        {
+            $this->shortestpath = $dist;
+            $this->shortestpath_nodes = explode("-", $path);
         }
-
-        foreach($orgin->neighbours as $des){
-            
-            $tmp = $this->BFS($des, $destination, $path);
-
-            if($tmp != null){
-                return  $tmp;
+        return;
+    }
+  
+    $i = array_search($orgin,$this->list);
+    $this->visited[$i] = true;
+    foreach($orgin->neighbours as $des){
+        $i = array_search($des,$this->list);
+        if($this->visited[$i] == false)
+            {
+                $this->BFS($des, $destination, $path."-".$des->name, $dist + $des->distance);
             }
         }
-        return null;
-    }
 
+    $this->visited[$i] = false;
+} // end of BFS function
+  
+  public function FastestRoute(Node $orgin, Node $destination)
+  {
 
-    public function FastestRoute(Node $orgin, Node $destination) // function that calls the shortest path 
-    {
-    if($orgin == $destination){
-        return "Source and destination are same";
-    }
+  if($orgin == $destination){
+    return "Source and destination are same";
+  }
+  
+  $this->visited = array_fill(0,sizeof($this->list),false);
 
-    $this->visited = array(sizeof($this->list));
-    $path  = $orgin->name;
+  $path  = $orgin->name;
 
+  $this->BFS($orgin,$destination,$path,0);
 
-    for($i =0; $i< sizeof($this->list); $i++){
-            $this->visited[$i] = false;
-    }
+  if($this->shortestpath == PHP_INT_MAX)
+    return "No path found";
+  else
+    return $this->shortestpath_nodes;
+  } // end of Fastest Route
 
-    $tmp = $this->BFS($orgin,$destination,$path);
-
-    return $tmp;
-    }
-
-    
-}
+}// end of Map class
+  
 
 $OC = new Node("OC");
 $CC = new Node("CC");
@@ -110,9 +104,16 @@ $Map->AddRoute($LEC,$CC,5);
 $Map->AddRoute($LEC,$OC,2);
 $Map->AddRoute($OC,$GCZ,3);
 $Map->AddRoute($CC,$OC,4);
+$Map->AddRoute($GCZ,$LEC,1);
 
 
-
-echo $Map->FastestRoute($LEC,$GCZ);
+for($i =0; $i < sizeof($Map->FastestRoute($LEC,$GCZ)); $i++){
+    if($i+1 == sizeof($Map->FastestRoute($LEC,$GCZ))){
+        echo $Map->FastestRoute($LEC,$GCZ)[$i];
+    }
+    else{
+        echo $Map->FastestRoute($LEC,$GCZ)[$i]."-";
+    }
+}
 
 ?>
