@@ -44,10 +44,10 @@ class Map{
     if($dist>$this->shortestpath)
         return;
 
-    if($orgin->name == $destination->name){
+    if($orgin->name == $destination->name){ 
         if($dist<$this->shortestpath)
         {
-            $this->shortestpath = $dist;
+            $this->shortestpath = $dist; 
             $this->shortestpath_nodes = explode("-", $path);
         }
         return;
@@ -88,10 +88,10 @@ class Map{
 }// end of Map class
   
 
-$OC = new Node("OC");
+$OC = new Node("OC"); 
 $CC = new Node("CC");
-$LEC = new Node("LEC");
-$GCZ = new Node("GCZ");
+$LEC = new Node("LEC"); 
+$GCZ = new Node("GCZ"); 
 
 $Map = new Map();
 
@@ -100,20 +100,79 @@ $Map->AddNode($LEC);
 $Map->AddNode($OC);
 $Map->AddNode($GCZ);
 
-$Map->AddRoute($LEC,$CC,5);
-$Map->AddRoute($LEC,$OC,2);
+$Map->AddRoute($LEC,$CC,3);
+$Map->AddRoute($LEC,$OC,7);
 $Map->AddRoute($OC,$GCZ,3);
 $Map->AddRoute($CC,$OC,4);
 $Map->AddRoute($GCZ,$LEC,1);
 
+$tmp_path = $Map->FastestRoute($LEC,$GCZ);
 
-for($i =0; $i < sizeof($Map->FastestRoute($LEC,$GCZ)); $i++){
-    if($i+1 == sizeof($Map->FastestRoute($LEC,$GCZ))){
-        echo $Map->FastestRoute($LEC,$GCZ)[$i];
+
+for($i =0; $i < sizeof($tmp_path); $i++){
+    if($i+1 == sizeof($tmp_path)){
+        echo $tmp_path[$i];
     }
     else{
-        echo $Map->FastestRoute($LEC,$GCZ)[$i]."-";
+        echo $tmp_path[$i]."-";
     }
 }
 
+
+
+
+
+/*
+private function Dijkstra(Node $orgin, Node $destination) //Helper function that actually find the shorest path
+{
+    $queue = new SplPriorityQueue();
+    $dist = array();
+    $prev = array();
+    foreach($this->list as $node){
+        $dist[$node->name] = PHP_INT_MAX;
+        $prev[$node->name] = null;
+        $queue->insert($node, PHP_INT_MAX);
+    }
+    $dist[$orgin->name] = 0;
+    $queue->insert($orgin, 0);
+    while(!$queue->isEmpty()){
+        $u = $queue->extract();
+        if($u->name == $destination->name)
+            break;
+        foreach($u->neighbours as $v){
+            $alt = $dist[$u->name] + $v->distance;
+            if($alt < $dist[$v->name]){
+                $dist[$v->name] = $alt;
+                $prev[$v->name] = $u;
+                $queue->insert($v, $alt);
+            }
+        }
+    }
+    $this->shortestpath = $dist[$destination->name];
+    $path = array();
+    $u = $destination;
+    while($prev[$u->name] !== null){
+        array_unshift($path, $u);
+        $u = $prev[$u->name];
+    }
+    array_unshift($path, $orgin);
+    $this->shortestpath_nodes = $path;
+}
+
+public function FastestRoute(Node $orgin, Node $destination)
+{
+    if($orgin == $destination){
+        return "Source and destination are same";
+    }
+    $this->Dijkstra($orgin,$destination);
+    if($this->shortestpath == PHP_INT_MAX)
+        return "No path found";
+    else
+        return $this->shortestpath_nodes;
+}
+
+
+*/
 ?>
+
+
