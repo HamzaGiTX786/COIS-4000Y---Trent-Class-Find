@@ -19,12 +19,19 @@
     ?>
     
     <main>
-        <nav>
+
+    <ul>
+        <li><a href="createNode.php">Create Node</a></li>
+        <li><a href="createRoute.php">Create Route</a></li>
+        <li><a href="createRoom.php">Create Room</a></li>
+        <li><a href="createBuilding.php">Create Building</a></li>
+    </ul>
+
+    
         <button onclick="location.href='createNode.php'" type="button">Create Node</button>
         <button onclick="location.href='createRoute.php'" type="button">Create Route</button>
         <button onclick="location.href='createRoom.php'" type="button">Create Room</button>
         <button onclick="location.href='createBuilding.php'" type="button">Create Building</button>
-        </nav>
        
 
     </main>
