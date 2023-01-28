@@ -70,7 +70,7 @@ if (isset($_POST['submit']))
     <title>Admin Login:Trent Class Find</title>
 </head>
 <body>
-    <a href="index.html"><?php
+    <a href="index.php"><?php
         include 'includes/header.php';
     ?></a>
     <div class="navmain">
