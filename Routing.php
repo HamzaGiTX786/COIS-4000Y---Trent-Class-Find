@@ -14,13 +14,12 @@ public function AddDest(Node $neighbour,$distance)
   $neighbour->distance = $distance;
   array_push($this->neighbours,$neighbour);
 }
-  
+
 }
   
 class Map{
   
   private $list;
-  private $visited;
   private $shortestpath;
   private $shortestpath_nodes;
   
@@ -36,54 +35,97 @@ class Map{
   
   public function AddRoute(Node $orgin, Node $des, $distance) // adds an edge between the 2 node
   {
-    $orgin->AddDest($des,$distance);
+    $endnode = clone $des;
+    $orgin->AddDest($endnode,$distance);
   }
-  
-  private function BFS(Node $orgin, Node $destination, $path,$dist) //Helper function that actually find the shorest path
+
+  private function Dijkstra(Node $orgin, Node $destination) //Helper function that actually find the shorest path
   {
-    if($dist>$this->shortestpath)
-        return;
+    
+      $queue = array();
+      $dist = array();
+      $prev = array();
 
-    if($orgin->name == $destination->name){ 
-        if($dist<$this->shortestpath)
+      foreach($this->list as $node){
+        if($node->name == $orgin->name) //add the origin at the very end to the queue
         {
-            $this->shortestpath = $dist; 
-            $this->shortestpath_nodes = explode("-", $path);
+            $prev[$node->name] = null; // setting all the previous node to null
+            continue;
         }
-        return;
-    }
-  
-    $i = array_search($orgin,$this->list);
-    $this->visited[$i] = true;
-    foreach($orgin->neighbours as $des){
-        $i = array_search($des,$this->list);
-        if($this->visited[$i] == false)
-            {
-                $this->BFS($des, $destination, $path."-".$des->name, $dist + $des->distance);
-            }
+        else{
+        $dist[$node->name] = PHP_INT_MAX; // setting all the distnace to infinity
+        $prev[$node->name] = null; // setting all the previous node to null
+        array_push($queue,$node); // adding all the nodes into the queue
         }
+      }
+      $dist[$orgin->name] = 0; // giving the origin the shortest distance at the begning
+      $u = $orgin; // initilize u
 
-    $this->visited[$i] = false;
-} // end of BFS function
+      array_unshift($queue,$orgin); // add origin to front of the queue
+
+      while(sizeof($queue) != 0){ // main loop of the algo
+
+        $smallestdist_node_in_queue = PHP_INT_MAX;
+        //  $index = array_search(min($dist),$dist);
+
+         /* foreach($queue as $node){
+            if($node->name == $index)
+            {
+                $u = $node; // set u to the node with the smallest distance in queue
+                break;
+            }
+          }
+          */
+
+          foreach($queue as $node)
+          {
+            if($smallestdist_node_in_queue > $dist[$node->name])
+            {
+                $smallestdist_node_in_queue = $dist[$node->name];
+                $u = $node;
+            }
+          }
+          
+          $i = array_search($u,$queue);
+          unset($queue[$i]); // remove the node from the queue, also means that node is visited
+          if($u->name == $destination->name) // if the current node is the destination node then shortest path has been found.
+              break;
+            
+
+          foreach($u->neighbours as $v){ // else check all of it neighbours 
+
+            $alt = $dist[$u->name] + $v->distance; // find the distances 
+              if($alt < $dist[$v->name]){
+                  $dist[$v->name] = $alt; // update the distances 
+                  $prev[$v->name] = $u; // update the previous visited node
+              }
+          }
+          //$dist[$u->name] = PHP_INT_MAX; // set the distance of the node just checked to infinity
+      }
+  
+      $this->shortestpath = $dist[$destination->name];
+      $path = array();
+      $u = $destination;
+      while($prev[$u->name] !== null){
+          array_unshift($path, $u);
+          $u = $prev[$u->name];
+      }
+      array_unshift($path, $orgin);
+      //var_dump($prev);
+      $this->shortestpath_nodes = $path;
+  } // end of dijkstra
   
   public function FastestRoute(Node $orgin, Node $destination)
   {
-
-  if($orgin == $destination){
-    return "Source and destination are same";
+      if($orgin == $destination){
+          return "Source and destination are same";
+      }
+      $this->Dijkstra($orgin,$destination);
+      if($this->shortestpath == PHP_INT_MAX)
+          return "No path found";
+      else
+          return $this->shortestpath_nodes;
   }
-  
-  $this->visited = array_fill(0,sizeof($this->list),false);
-
-  $path  = $orgin->name;
-
-  $this->BFS($orgin,$destination,$path,0);
-
-  if($this->shortestpath == PHP_INT_MAX)
-    return "No path found";
-  else
-    return $this->shortestpath_nodes;
-  } // end of Fastest Route
 
 }// end of Map class
   
@@ -100,23 +142,16 @@ $Map->AddNode($LEC);
 $Map->AddNode($OC);
 $Map->AddNode($GCZ);
 
-$Map->AddRoute($LEC,$CC,3);
-$Map->AddRoute($LEC,$OC,7);
+$Map->AddRoute($LEC,$CC,2);
+$Map->AddRoute($LEC,$OC,20);
 $Map->AddRoute($OC,$GCZ,3);
 $Map->AddRoute($CC,$OC,4);
-$Map->AddRoute($GCZ,$LEC,1);
+$Map->AddRoute($GCZ,$LEC,3);
 
 $tmp_path = $Map->FastestRoute($LEC,$GCZ);
 
 
-for($i =0; $i < sizeof($tmp_path); $i++){
-    if($i+1 == sizeof($tmp_path)){
-        echo $tmp_path[$i];
-    }
-    else{
-        echo $tmp_path[$i]."-";
-    }
-}
+var_dump($tmp_path);
 
 
 
@@ -125,7 +160,7 @@ for($i =0; $i < sizeof($tmp_path); $i++){
 /*
 private function Dijkstra(Node $orgin, Node $destination) //Helper function that actually find the shorest path
 {
-    $queue = new SplPriorityQueue();
+    $queue = array();
     $dist = array();
     $prev = array();
     foreach($this->list as $node){
@@ -148,6 +183,7 @@ private function Dijkstra(Node $orgin, Node $destination) //Helper function that
             }
         }
     }
+
     $this->shortestpath = $dist[$destination->name];
     $path = array();
     $u = $destination;
