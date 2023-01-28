@@ -2,6 +2,7 @@
 include 'includes/library.php';
 
 $errors = array(); //declare empty array to add errors too
+$ID = $_POST['ID'] ?? null; 
 $Location = $_POST['Location'] ?? null;
 $Name = $_POST['Name'] ?? null;
 $Neighbours= $_POST['Neighbours'] ?? null;
@@ -11,7 +12,10 @@ if (isset($_POST['submit']))
 { //only do this code if the form has been submitted
     //validate user has entered a first name
      
-    
+    if (!isset($ID) || strlen($ID) === 0) 
+    {
+        $errors['ID'] = true;
+    }
     if (!isset($Location) || strlen($Location) === 0) 
     {
         $errors['Location'] = true;
@@ -29,13 +33,13 @@ if (isset($_POST['submit']))
     if(count($errors)===0) //if no errors are encountered
     {
         echo "made it"; 
-    $query = "INSERT INTO Node VALUES(NULL,?,?,?)"; //select the row of the table with the given username
+    $query = "INSERT INTO Node VALUES(?,?,?,?)"; //select the row of the table with the given username
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$query))
     {
         echo "SQL prepare failed";
     }else{
-    if(!mysqli_stmt_bind_param($stmt,"sss",$Location,$Name,$jsonStore)){
+    if(!mysqli_stmt_bind_param($stmt,"ssss",$ID,$Location,$Name,$jsonStore)){
         echo "bind failed"; 
     }
     echo "bind good"; 
@@ -73,6 +77,11 @@ if (isset($_POST['submit']))
     <main>
         <h2>Create Node</h2>
     <form id="create" name="create" method="post" novalidate>  
+                    <div>
+                        <label for="ID">ID</label>
+                        <input type="text" name="ID" id="ID" placeholder="Enter Node ID" value="" required />
+                         <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please enter Node ID</span>
+                    </div>
                     <div>
                         <label for="Location">Location</label>
                         <input type="text" name="Location" id="Location" placeholder="Enter Node Location" value="" required />
