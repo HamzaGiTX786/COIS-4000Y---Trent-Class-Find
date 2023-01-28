@@ -24,10 +24,6 @@ h1{
     font-weight: 700;
 }
 
-a{
-    text-decoration: none;
-}
-
 footer{
     display: flex;
     flex-direction: row;
@@ -134,7 +130,7 @@ ul li{
 }
 
 
-section a, section h2, .wrapper h2{
+section a, section h2, .wrapper h2, ul.wrapper li a{
     color: white;
     text-decoration: none;
     text-align: center;
@@ -175,4 +171,8 @@ nav a{
 
 .error{
     color: red;
+}
+
+a{
+    text-decoration: none;
 }

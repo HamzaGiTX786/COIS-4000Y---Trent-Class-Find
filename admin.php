@@ -1,4 +1,10 @@
 <?php
+
+if(isset($_SESSION['id']))
+{
+header("Location: backend.php");
+}
+
 include 'includes/library.php';
 
 $user = $_POST['username'] ?? null;
@@ -35,19 +41,9 @@ if (isset($_POST['submit']))
             session_start(); //start the session
             $_SESSION['user'] = $row['username']; //load session credentials
             $_SESSION['id'] = $row['userId'];
+            echo $_SESSION['id'];
 
-            if(!empty($_POST["remember"])) // if remeber was checked
-            {
-                setcookie ("userrem",$user,time()+ (10 * 365 * 24 * 60 * 60));
-            }
-            else
-            {
-                if(isset($_COOKIE["userrem"])) {
-                    setcookie ("userem","");
-                }
-            }
-
-            header("Location: backend"); //redirect to the homepage
+            //header("Location: backend.php"); //redirect to the homepage
             
         }
         else
@@ -85,7 +81,7 @@ if (isset($_POST['submit']))
             </div>
             <div class="end">
                 <label for="endpoint">Enter your password:</label>
-                <input type="text" name="password" id="password" placeholder="Enter your password here" value="" required/> 
+                <input type="password" name="password" id="password" placeholder="Enter your password here" value="" required/> 
             </div>
             <div>
                     <span class="error <?=!isset($errors['login']) ? 'hidden' : "";?>"> Your username or password was invalid</span>
