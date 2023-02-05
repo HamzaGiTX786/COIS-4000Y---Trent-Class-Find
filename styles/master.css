@@ -130,13 +130,13 @@ ul li{
 }
 
 
-section a, section h2, .wrapper h2, ul.wrapper li a{
+section a, section h2, .wrapper h2, ul.wrapper li a, form h2{
     color: white;
     text-decoration: none;
     text-align: center;
 }
 
-section h2, .wrapper h2{
+section h2, .wrapper h2, form h2{
     font-size: larger;
     font-weight: 600;
 }
