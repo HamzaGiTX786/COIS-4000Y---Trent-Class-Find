@@ -91,12 +91,12 @@ if (isset($_POST['submit']))
                         <input type="number" name="Distance" id="Distance" placeholder="Enter Nodes Distance" value="" required />
                          <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter Nodes Distance</span>
                     </div>
+
                     <div>
-                        <!---
                         <label for="image">Image(s)</label>
-                        <input type="file" id="image" name="image">
+                        <input type="file" id="image" name="image" multiple>
                          <span class="error <?=!isset($errors['image']) ? 'hidden' : "";?>">Please Upload Images</span>
-                        -->
+
                     </div>
 
                     <div id="buttons">    
