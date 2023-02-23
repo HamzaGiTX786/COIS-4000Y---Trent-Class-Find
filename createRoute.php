@@ -4,12 +4,28 @@ include 'includes/library.php';
 $errors = array(); //declare empty array to add errors too
 $Start_Node = $_POST['Start_Node'] ?? null;
 $End_Node = $_POST['End_Node'] ?? null;
-$Distnace= $_POST['Distance'] ?? null;
+$Distance= $_POST['Distance'] ?? null;
  
 if (isset($_POST['submit'])) 
 { //only do this code if the form has been submitted
     //validate user has entered a first name
      
+    $tempname = $_FILES['image']['tmp_name'];
+    // hamza file uplaod 
+    $direx = explode('/', getcwd());
+    define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
+    $folder = WEBROOT."www_data/img/";
+    var_dump($direx); 
+    echo "    ||   "; 
+    echo $folder; 
+    $filename = $_FILES['image']['name'];
+    $exts = explode(".", $filename); // split based on period
+    $ext = $exts[count($exts)-1]; //take the last split (contents after last period)
+
+    $filename= substr($tempname, strrpos($tempname, '/') + 1).".".$ext;
+    echo $filename;
+   // move_uploaded_file($_FILES['image']['tmp_name'],'../'.$folder);
+    $jsonStore = json_encode($filename); // encode filename in a JSON 
     
     if (!isset($Start_Node) || strlen($Start_Node) === 0) 
     {
@@ -34,14 +50,22 @@ if (isset($_POST['submit']))
     {
         echo "SQL prepare failed";
     }else{
-    if(!mysqli_stmt_bind_param($stmt,"sss",$Start_Node,$End_Node,$Distnace)){
+    if(!mysqli_stmt_bind_param($stmt,"sss",$Start_Node,$End_Node,$Distance)){
         echo "bind failed"; 
     }
     echo "bind good"; 
     if(!mysqli_stmt_execute($stmt)){
         echo "exec failed";
     }
-    echo "exe done"; 
+    if(move_uploaded_file($tempname,$folder.$filename))
+    {
+       header("Location: index"); 
+        exit();
+    }
+    else{
+        echo "Image upload error";
+        die();
+    }
     }
 }
  
