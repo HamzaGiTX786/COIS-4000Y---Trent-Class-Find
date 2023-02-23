@@ -8,8 +8,37 @@ $Distnace= $_POST['Distance'] ?? null;
  
 if (isset($_POST['submit'])) 
 { //only do this code if the form has been submitted
-    //validate user has entered a first name
-     
+    
+         $tempname = $_FILES['image']['tmp_name'];
+        // hamza file uplaod 
+        $direx = explode('/', getcwd());
+        define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
+        $folder = WEBROOT."www_data/img/";
+        var_dump($direx); 
+        echo "    ||   "; 
+        echo $folder; 
+        $filename = $_FILES['image']['name'];
+        $exts = explode(".", $filename); // split based on period
+        $ext = $exts[count($exts)-1]; //take the last split (contents after last period)
+
+        $filename= substr($tempname, strrpos($tempname, '/') + 1).".".$ext;
+        echo $filename;
+       // move_uploaded_file($_FILES['image']['tmp_name'],'../'.$folder);
+        $jsonStore = json_encode($filename); // encode filename in a JSON 
+
+
+        
+
+    /*
+    // multiple fileupload taken from internet 
+     $count_files = count($_FILES['file']['name']); // count number of files
+     for($loop=0;$loop<$count_files;$loop++){
+        $filename=$_FILES['file']['name'][$loop]; 
+
+        move_uploaded_file($_FILES['file']['tmp_name'][$loop],'img/'.$filename);
+     }
+     // end 
+     */ 
     
     if (!isset($Start_Node) || strlen($Start_Node) === 0) 
     {
@@ -24,25 +53,37 @@ if (isset($_POST['submit']))
         $errors['Distnace'] = true;
     }
    // var_dump($errors); 
-    
+    echo $Start_Node."\n"; 
+    echo $End_Node."\n" ;
+    echo $Distnace."\n" ;
+    echo $filename."\n";
     if(count($errors)===0) //if no errors are encountered
     {
         echo "made it";
-    $query = "INSERT INTO Edge VALUES(NULL,?,?,?,NULL)"; //select the row of the table with the given username
+    $query = "INSERT INTO Edge VALUES(NULL,?,?,?,?)"; //select the row of the table with the given username
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$query))
     {
         echo "SQL prepare failed";
     }else{
-    if(!mysqli_stmt_bind_param($stmt,"sss",$Start_Node,$End_Node,$Distnace)){
+    if(!mysqli_stmt_bind_param($stmt,"ssss",$Start_Node,$End_Node,$Distnace,$jsonStore)){ // not sure what image value should be 
         echo "bind failed"; 
     }
     echo "bind good"; 
     if(!mysqli_stmt_execute($stmt)){
         echo "exec failed";
     }
-    echo "exe done"; 
+    if(move_uploaded_file($tempname,$folder.$filename))
+    {
+       header("Location: index"); 
+        exit();
     }
+    else{
+        echo "Image upload error";
+        die();
+    }
+    }
+
 }
  
 
@@ -74,7 +115,7 @@ if (isset($_POST['submit']))
     <main>
        
     <h2>Create Route</h2>
-    <form id="create" name="create" method="post" novalidate>
+    <form id="create" name="create" method="post" action='' enctype='multipart/form-data' novalidate>
                     
                     <div>
                         <label for="Start_Node">Start Node</label>
@@ -92,11 +133,9 @@ if (isset($_POST['submit']))
                          <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter Nodes Distance</span>
                     </div>
                     <div>
-                        <!---
                         <label for="image">Image(s)</label>
-                        <input type="file" id="image" name="image">
+                        <input type="file" id="image" name="image" />
                          <span class="error <?=!isset($errors['image']) ? 'hidden' : "";?>">Please Upload Images</span>
-                        -->
                     </div>
 
                     <div id="buttons">    
