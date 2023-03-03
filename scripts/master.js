@@ -88,6 +88,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 var startnode = document.getElementById("Start_Node");
 
+if(startnode != null){
+
 startnode.onchange = () =>{
 
     console.log(startnode.value);
@@ -120,7 +122,7 @@ startnode.onchange = () =>{
         }});
 
         xhttp.send();
-}
+}}
           
           
 });
