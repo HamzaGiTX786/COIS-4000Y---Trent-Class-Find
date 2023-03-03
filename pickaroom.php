@@ -1,6 +1,6 @@
 <?php
 include 'includes/library.php';
-include 'Routing.php';
+include 'includes/Routing.php';
 
         $query = "SELECT Name,Code FROM Buildings ORDER BY Name ASC";
         $stmt = mysqli_stmt_init($conn);

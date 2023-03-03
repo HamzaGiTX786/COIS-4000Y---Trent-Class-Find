@@ -4,7 +4,7 @@ if(!isset($_GET['build_code'])){
     die();
 }
 
-include 'includes/library.php';
+include 'library.php';
 
 $sql = "SELECT ID,Name FROM Room WHERE Building_code =?";
 $stmt = mysqli_stmt_init($conn);

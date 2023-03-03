@@ -104,6 +104,7 @@ for($k = 0; $k<sizeof($tempname);$k++){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/master.css"/>
+    <script src="scripts/master.js" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/e156dbae2b.js" crossorigin="anonymous"></script>
 
     <title>Admin Backend:Trent Class Find</title>
@@ -136,12 +137,8 @@ for($k = 0; $k<sizeof($tempname);$k++){
                         <label for="End_Node">End Node</label>
                         <select name="End_Node" id="End_Node" required>
                         <option value="">Select a Node as the end point</option>
-                        <?php foreach($nodes as $node):?>
-                                <option value="<?= $node[1];?>"><?= $node[0];?></option>
-                            <?php endforeach; ?>
                         </select>
-                         <span class="error <?=!isset($errors['End_Node']) ? 'hidden' : "";?>">Please enter End Node</span>
-                         <span class="error <?=!isset($errors['same']) ? 'hidden' : "";?>">End Node cannot be same as Start Node</span>
+                         <span class="error <?=!isset($errors['End_Node']) ? 'hidden' : "";?>">Please enter End Node</span> 
                     </div>
                     <div class="start">
                         <label for="Distance">Distance</label>
