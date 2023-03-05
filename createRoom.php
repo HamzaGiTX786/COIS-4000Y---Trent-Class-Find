@@ -9,6 +9,21 @@ $Type= $_POST['Room_Type'] ?? null;
 if (isset($_POST['submit'])) 
 { //only do this code if the form has been submitted
     //validate user has entered a first name
+    $tempname = $_FILES['image']['tmp_name'];
+    // hamza file uplaod 
+    $direx = explode('/', getcwd());
+    define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
+    $folder = WEBROOT."www_data/img/";
+    var_dump($direx); 
+    echo "    ||   "; 
+    echo $folder; 
+    $filename = $_FILES['image']['name'];
+    $exts = explode(".", $filename); // split based on period
+    $ext = $exts[count($exts)-1]; //take the last split (contents after last period)
+
+    $filename= substr($tempname, strrpos($tempname, '/') + 1).".".$ext;
+    echo $filename;
+   // move_uploaded_file($_FILES['image']['tmp_name'],'../'.$folder);
      
     
     if (!isset($Building_Name) || strlen($Building_Name) === 0) 
@@ -28,13 +43,13 @@ if (isset($_POST['submit']))
     if(count($errors)===0) //if no errors are encountered
     {
         echo "made it";
-    $query = "INSERT INTO Room VALUES(NULL,?,?,?,NULL)"; //select the row of the table with the given username
+    $query = "INSERT INTO Room VALUES(NULL,?,?,?,?)"; //select the row of the table with the given username
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$query))
     {
         echo "SQL prepare failed";
     }else{
-    if(!mysqli_stmt_bind_param($stmt,"sss",$Building_Name,$Name,$Type)){
+    if(!mysqli_stmt_bind_param($stmt,"sss",$Building_Name,$Name,$Type,$filename)){
         echo "bind failed"; 
     }
     echo "bind good"; 
@@ -92,9 +107,10 @@ if (isset($_POST['submit']))
                          <span class="error <?=!isset($errors['Room_Type']) ? 'hidden' : "";?>">Please enter Room Type</span>
                     </div>
                     <div>
-                        <label for="image">Image(s)</label>
-                        <input type="file" id="image" name="image">
+                    <label for="image">Image(s)</label>
+                        <input type="file" id="image" name="image[]" multiple>
                          <span class="error <?=!isset($errors['image']) ? 'hidden' : "";?>">Please Upload Images</span>
+
                     </div>
 
                     <div id="buttons">    

@@ -91,8 +91,10 @@ for($k = 0; $k<sizeof($tempname);$k++){
     }
         }
     }
+    }
+
 }
-}
+
 ?>
 
 
