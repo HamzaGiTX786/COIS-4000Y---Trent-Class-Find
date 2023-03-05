@@ -2,7 +2,7 @@
 include 'includes/library.php';
 include 'includes/Routing.php';
 
-        $query = "SELECT Name,Code FROM Buildings ORDER BY Name ASC";
+        $query = "SELECT Name,ID FROM Node ORDER BY Name ASC";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$query))
         {
@@ -19,6 +19,7 @@ $endpoint = $_POST['endpoint'] ?? null;
 
 $errors = array();
 $show = array();
+$imgs = array();
 
 if(isset($_POST['submit'])){
 
@@ -40,8 +41,9 @@ if(isset($_POST['submit'])){
         $endpointnode = $Map->GetNode($endpoint);
 
         $tmp_path = $Map->FastestRoute($startpointnode,$endpointnode);
+
         
-        for($i = 0; $i < sizeof($tmp_path) - 1; $i++){
+        for($i = 0; $i < sizeof($tmp_path) -1 ; $i++){
              
         
             $queryimage = "SELECT Image FROM Edge WHERE Start_Node = ? AND End_Node = ?";
@@ -54,15 +56,27 @@ if(isset($_POST['submit'])){
               mysqli_stmt_bind_param($stmt,"ss",$tmp_path[$i]->name, $tmp_path[$i + 1]->name);
               mysqli_stmt_execute($stmt);
               $result = mysqli_stmt_get_result($stmt);
-              $image = mysqli_fetch_assoc($result); // get output for the searched item
+              $image = mysqli_fetch_all($result); // get output for the searched item
 
-              
-              $image['Image'] = str_replace('"',"",$image['Image']);
-
+             foreach($image as $pic){
+                foreach($pic as $p)
+                {
+                    if(str_contains($p,","))
+                    {
+                        $p = explode(",",$p);
+                        foreach($p as $store){
+                            array_push($imgs,$store);
+                        }
+                    }
+                    else{
+                        array_push($imgs,$p);
+                    }
+                }
+                
+             }
 
         }
     } 
-    
 }
 }
 
@@ -132,9 +146,11 @@ if(isset($_POST['submit'])){
 
     <div class=" route <?=!isset($show['route']) ? 'hidden' : "" ;?>">
         <ol>
+            <?php foreach($imgs as $img):?>
             <li>
-                <img src="http://loki.trentu.ca/~classfind/www_data/img/<?= $image['Image']?>" alt="Image of route">
+                <img src="http://loki.trentu.ca/~classfind/www_data/img/<?= $img?>" alt="Image of route">
             </li>
+            <?php endforeach; ?>
         </ol>
     </div>
     </main>

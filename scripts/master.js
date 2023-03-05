@@ -101,6 +101,7 @@ startnode.onchange = () =>{
     xhttp.addEventListener("load", (ev) =>{
         if(xhttp.status == 200)
         {
+            console.log(xhttp.responseText);
             const datanode = JSON.parse(xhttp.responseText);
      
             let output = "";
