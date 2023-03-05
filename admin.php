@@ -1,12 +1,12 @@
 <?php
+session_start(); 
+include 'includes/library.php';
 
 if(isset($_SESSION['id']))
 {
 header("Location: backend.php");
 exit();
 }
-
-include 'includes/library.php';
 
 $user = $_POST['username'] ?? null;
 $password = $_POST['password'] ?? null;
@@ -39,12 +39,11 @@ if (isset($_POST['submit']))
         if(password_verify($password, $row['password'])) //verify that the password is correct
         //if($password == $row['password'])
         {
-            session_start(); //start the session
             $_SESSION['user'] = $row['username']; //load session credentials
             $_SESSION['id'] = $row['userId'];
             echo $_SESSION['id'];
 
-            //header("Location: backend.php"); //redirect to the homepage
+            header("Location: backend.php"); //redirect to the homepage
             
         }
         else

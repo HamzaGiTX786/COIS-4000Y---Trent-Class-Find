@@ -1,5 +1,7 @@
 <?php
 
+include 'includes/library.php';
+
 class Node{
 public $name; 
 public $neighbours = array();
@@ -37,6 +39,20 @@ class Map{
   {
     $endnode = clone $des;
     $orgin->AddDest($endnode,$distance);
+  }
+
+  public function GetNode($name){
+    foreach ($this->list as $node)
+    {
+        if($node->name == $name)
+        {
+            return $node;
+        }
+    }
+  }
+
+  public function GetList(){
+    return $this->list;
   }
 
   private function Dijkstra(Node $orgin, Node $destination) //Helper function that actually find the shorest path
@@ -128,87 +144,53 @@ class Map{
   }
 
 }// end of Map class
-  
 
-$OC = new Node("OC"); 
-$CC = new Node("CC");
-$LEC = new Node("LEC"); 
-$GCZ = new Node("GCZ"); 
+//----------------Start of Main------------------------------
 
 $Map = new Map();
 
-$Map->AddNode($CC);
-$Map->AddNode($LEC);
-$Map->AddNode($OC);
-$Map->AddNode($GCZ);
-
-$Map->AddRoute($LEC,$CC,2);
-$Map->AddRoute($LEC,$OC,20);
-$Map->AddRoute($OC,$GCZ,3);
-$Map->AddRoute($CC,$OC,4);
-$Map->AddRoute($GCZ,$LEC,3);
-
-$tmp_path = $Map->FastestRoute($LEC,$GCZ);
-
-
-var_dump($tmp_path);
-
-
-
-
-
-/*
-private function Dijkstra(Node $orgin, Node $destination) //Helper function that actually find the shorest path
+$query = "SELECT ID,Neighbours FROM Node";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt,$query))
 {
-    $queue = array();
-    $dist = array();
-    $prev = array();
-    foreach($this->list as $node){
-        $dist[$node->name] = PHP_INT_MAX;
-        $prev[$node->name] = null;
-        $queue->insert($node, PHP_INT_MAX);
-    }
-    $dist[$orgin->name] = 0;
-    $queue->insert($orgin, 0);
-    while(!$queue->isEmpty()){
-        $u = $queue->extract();
-        if($u->name == $destination->name)
-            break;
-        foreach($u->neighbours as $v){
-            $alt = $dist[$u->name] + $v->distance;
-            if($alt < $dist[$v->name]){
-                $dist[$v->name] = $alt;
-                $prev[$v->name] = $u;
-                $queue->insert($v, $alt);
-            }
-        }
-    }
-
-    $this->shortestpath = $dist[$destination->name];
-    $path = array();
-    $u = $destination;
-    while($prev[$u->name] !== null){
-        array_unshift($path, $u);
-        $u = $prev[$u->name];
-    }
-    array_unshift($path, $orgin);
-    $this->shortestpath_nodes = $path;
+    echo "SQL prepare failed";
+}
+else{
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $nodes = mysqli_fetch_all($result); // get output for the searched item
 }
 
-public function FastestRoute(Node $orgin, Node $destination)
+foreach($nodes as $n)
 {
-    if($orgin == $destination){
-        return "Source and destination are same";
-    }
-    $this->Dijkstra($orgin,$destination);
-    if($this->shortestpath == PHP_INT_MAX)
-        return "No path found";
-    else
-        return $this->shortestpath_nodes;
+    $node = new Node($n[0]);
+    $Map->AddNode($node);
 }
 
+foreach($nodes as $n){
 
-*/
+$queryedge = "SELECT Start_Node,End_Node,Distance FROM Edge WHERE Start_Node = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$queryedge))
+    {
+        echo "SQL prepare failed";
+    }
+    else{
+        mysqli_stmt_bind_param($stmt,"s",$n[0]);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $edges = mysqli_fetch_all($result); // get output for the searched item
+    }
+
+foreach($edges as $edge){
+
+    $startnode = $Map->GetNode($edge[0]);
+    $endnode = $Map->GetNode($edge[1]);
+    
+    $Map->AddRoute($startnode,$endnode,$edge[2]);
+}
+}
+
 ?>
 
 

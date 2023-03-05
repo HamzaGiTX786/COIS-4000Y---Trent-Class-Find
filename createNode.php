@@ -1,13 +1,25 @@
 <?php
 include 'includes/library.php';
 
+$q = "SELECT Name,ID FROM Node ORDER BY Name ASC";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt,$q))
+{
+    echo "SQL prepare failed";
+}
+else{
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $nodes = mysqli_fetch_all($result); // get output for the searched item
+}
+
+
 $errors = array(); //declare empty array to add errors too
 $ID = $_POST['ID'] ?? null; 
 $Location = $_POST['Location'] ?? null;
 $Name = $_POST['Name'] ?? null;
 $Neighbours= $_POST['Neighbours'] ?? null;
-$jsonStore = json_encode($Neighbours); // encode neighbors in a JSON 
-echo $jsonStore; 
+
 if (isset($_POST['submit'])) 
 { //only do this code if the form has been submitted
     //validate user has entered a first name
@@ -24,31 +36,34 @@ if (isset($_POST['submit']))
     {
         $errors['Name'] = true;
     }
-    if (!isset($Neighbours) || strlen($Neighbours) === 0) 
+    if (!isset($Neighbours) || sizeof($Neighbours) === 0) 
     {
         $errors['Neighbours'] = true;
     }
-    var_dump($errors); 
     
     if(count($errors)===0) //if no errors are encountered
     {
-        echo "made it"; 
-    $query = "INSERT INTO Node VALUES(?,?,?,?)"; //select the row of the table with the given username
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$query))
-    {
-        echo "SQL prepare failed";
-    }else{
-    if(!mysqli_stmt_bind_param($stmt,"ssss",$ID,$Location,$Name,$jsonStore)){
-        echo "bind failed"; 
-    }
-    echo "bind good"; 
-    if(!mysqli_stmt_execute($stmt)){
-        echo "exec failed";
-    }
-    echo "exe done"; 
-    }
-}
+
+        $NeighbourNodes = implode(",",$Neighbours);
+        $jsonStore = json_encode($NeighbourNodes); // encode neighbors in a JSON 
+    
+        $query = "INSERT INTO Node VALUES(?,?,?,?)"; //select the row of the table with the given username
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$query))
+        {
+            echo "SQL prepare failed";
+        }else{
+        if(!mysqli_stmt_bind_param($stmt,"ssss",$ID,$Location,$Name,$jsonStore)){
+            echo "bind failed"; 
+        } 
+        if(!mysqli_stmt_execute($stmt)){
+            echo "exec failed";
+        }
+
+        header("Location: admin");
+        
+        }
+ }
  
 
 }
@@ -94,7 +109,11 @@ if (isset($_POST['submit']))
                     </div>
                     <div>
                         <label for="Neighbours">Neighbours</label>
-                        <input type="text" name="Neighbours" id="Neighbours" placeholder="Enter Node Neighbours" value="" required />
+                        <?php foreach($nodes as $node):?>
+                            <label for="Neighbours"><?= $node[0];?></label>
+                            <input type="checkbox" name="Neighbours[]" id="Neighbours" placeholder="Enter Node Neighbours" value="<?=$node[1];?>">
+                        <?php endforeach; ?>
+                        <!-- <input type="text" name="Neighbours" id="Neighbours" placeholder="Enter Node Neighbours" value="" required /> -->
                          <span class="error <?=!isset($errors['Neighbours']) ? 'hidden' : "";?>">Please enter Node Neighbours ID</span>
                     </div>
                     <div id="buttons">    
