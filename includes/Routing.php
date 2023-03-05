@@ -1,6 +1,6 @@
 <?php
 
-include 'includes/library.php';
+include 'library.php';
 
 class Node{
 public $name; 
@@ -186,10 +186,12 @@ foreach($edges as $edge){
 
     $startnode = $Map->GetNode($edge[0]);
     $endnode = $Map->GetNode($edge[1]);
-    
+
     $Map->AddRoute($startnode,$endnode,$edge[2]);
 }
 }
+
+
 
 ?>
 

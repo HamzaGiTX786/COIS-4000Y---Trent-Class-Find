@@ -21,13 +21,13 @@ else{
     mysqli_stmt_bind_param($stmt,"s",$start_node);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-    $neighbours = mysqli_fetch_assoc($result); // get output for the searched item
+    $neighbours = mysqli_fetch_all($result); // get output for the searched item
 }
 
 foreach($neighbours as $neighbour)
 {
-   $neighbour = str_replace('"',"",$neighbour);
-    $neighbours_array = explode(",",$neighbour);
+   $neighbour[0] = str_replace('"',"",$neighbour[0]);
+    $neighbours_array = explode(",",$neighbour[0]);
 
     foreach($neighbours_array as $na){
         $q = "SELECT ID,Name FROM Node WHERE ID = ?";

@@ -65,7 +65,6 @@ if (isset($_POST['submit']))
         }
 
     $images = implode(",",$filename);
-    $images = json_encode($images);
 
     $query = "INSERT INTO Edge VALUES(NULL,?,?,?,?)"; //select the row of the table with the given username
     $stmt = mysqli_stmt_init($conn);
