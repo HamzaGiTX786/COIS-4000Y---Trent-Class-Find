@@ -26,6 +26,7 @@
         <li><a href="createRoute.php">Create Route</a></li>
         <li><a href="createRoom.php">Create Room</a></li>
         <li><a href="createBuilding.php">Create Building</a></li>
+        <li><a href="modify.php">Modify/Delete</a></li>
     </ul>
        
 
