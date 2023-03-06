@@ -2,7 +2,7 @@
 include 'includes/library.php';
 include 'includes/Routing.php';
 
-        $query = "SELECT Name,ID FROM Node ORDER BY Name ASC";
+        $query = "SELECT Name,Code FROM Buildings ORDER BY Name ASC";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$query))
         {
@@ -77,6 +77,8 @@ if(isset($_POST['submit'])){
 
         }
     } 
+
+    var_dump($imgs);
 }
 }
 

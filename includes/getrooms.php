@@ -6,7 +6,7 @@ if(!isset($_GET['build_code'])){
 
 include 'library.php';
 
-$sql = "SELECT ID,Name FROM Room WHERE Building_code =?";
+$sql = "SELECT ID,Name FROM Node WHERE Building_code =?";
 $stmt = mysqli_stmt_init($conn);
 if(!mysqli_stmt_prepare($stmt,$sql))
 {

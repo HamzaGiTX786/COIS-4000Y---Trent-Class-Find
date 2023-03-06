@@ -15,6 +15,7 @@ window.addEventListener("DOMContentLoaded", () => {
         xhttp.addEventListener("load", (ev) =>{
             if(xhttp.status == 200)
             {
+                console.log(xhttp.responseText);
                 const data = JSON.parse(xhttp.responseText);
 
                 let output = "";
@@ -54,7 +55,7 @@ window.addEventListener("DOMContentLoaded", () => {
              xhttp.addEventListener("load", (ev) =>{
                  if(xhttp.status == 200)
                  {
-                     
+                    console.log(xhttp.responseText);
                      const data = JSON.parse(xhttp.responseText);
      
                      let output = "";
