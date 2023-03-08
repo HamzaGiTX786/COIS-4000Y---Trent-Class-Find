@@ -17,6 +17,7 @@ else{
 $errors = array(); //declare empty array to add errors too
 $Start_Node = $_POST['Start_Node'] ?? null;
 $End_Node = $_POST['End_Node'] ?? null;
+$Description= $_POST['Description'] ?? null;
 $Distance= $_POST['Distance'] ?? null;
 
 $tempname = array();
@@ -45,6 +46,10 @@ if (isset($_POST['submit']))
     {
         $errors['Distance'] = true;
     }
+    if (!isset($Description) || strlen($Description) === 0)
+    {
+        $errors['Description'] = true;
+    }
 
 
     if(count($errors)===0) //if no errors are encountered
@@ -66,13 +71,13 @@ if (isset($_POST['submit']))
 
     $images = implode(",",$filename);
 
-    $query = "INSERT INTO Edge VALUES(NULL,?,?,?,?)"; //select the row of the table with the given username
+    $query = "INSERT INTO Edge VALUES(NULL,?,?,?,?,?)"; //select the row of the table with the given username
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$query))
     {
         echo "SQL prepare failed";
     }else{
-    if(!mysqli_stmt_bind_param($stmt,"ssss",$Start_Node,$End_Node,$Distance,$images)){
+    if(!mysqli_stmt_bind_param($stmt,"sssss",$Start_Node,$End_Node,$Distance,$Description,$images)){
         echo "bind failed";
     }
     if(!mysqli_stmt_execute($stmt)){
@@ -145,6 +150,12 @@ for($k = 0; $k<sizeof($tempname);$k++){
                         <label for="Distance">Distance</label>
                         <input type="number" min="0" name="Distance" id="Distance" placeholder="Enter Nodes Distance" value="" required />
                          <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter Nodes Distance</span>
+                    </div>
+
+                    <div class="start">
+                        <label for="Description">Description</label>
+                        <textarea name="Description" id="Description" placeholder="Enter the description here" rows="5" cols="33" value="" required></textarea>
+                         <span class="error <?=!isset($errors['Description']) ? 'hidden' : "";?>">Please enter a description</span>
                     </div>
 
                     <div class="start">
