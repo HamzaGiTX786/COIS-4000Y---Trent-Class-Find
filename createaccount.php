@@ -12,7 +12,7 @@ $passwordre = $_POST['passwordre'] ?? null;
 $username = $_POST['username'] ?? null; 
 $canchangebuilding = $_POST['canchangebuilding']??null;
 $updateimage = $_POST['updateimage']??null;
-$updatedescription = $_POST['updatedescription']??null;
+$can_create_node = $_POST['can_create_node']??null;
 
 if (isset($_POST['submit'])) 
 { //only do this code if the form has been submitted
@@ -60,9 +60,9 @@ if (isset($_POST['submit']))
         $errors['updateimage'] = true;
     }
 
-    if (!isset($updatedescription) || strlen($updatedescription) === 0) 
+    if (!isset($can_create_node) || strlen($can_create_node) === 0) 
     {
-        $errors['updatedescription'] = true;
+        $errors['can_create_node'] = true;
     }
     
     if(count($errors)===0) //if no errors are encountered
@@ -100,7 +100,7 @@ if (isset($_POST['submit']))
             echo "SQL prepare failed";
         }
         else{
-            mysqli_stmt_bind_param($stmt,"ssssssss",$username, password_hash($password, PASSWORD_BCRYPT) , $email, $fname, $lname,$canchangebuilding,$updateimage,$updatedescription);
+            mysqli_stmt_bind_param($stmt,"ssssssss",$username, password_hash($password, PASSWORD_BCRYPT) , $email, $fname, $lname,$canchangebuilding,$updateimage,$can_create_node);
             mysqli_stmt_execute($stmt);
 
             header("Location: admin");
@@ -171,7 +171,7 @@ if (isset($_POST['submit']))
             </div>
 
             <div class="end">
-                <label for="canchangebuilding">Can the Admin user update the buildings?</label>
+                <label for="canchangebuilding">Can the Admin user create new buildings?</label>
                 <select name="canchangebuilding" id="canchangebuilding">
                 <option value="">Select an option</option>
                     <option value="1">Yes</option>
@@ -181,7 +181,7 @@ if (isset($_POST['submit']))
             </div>
 
             <div class="end">
-                <label for="updateimage">Can the Admin user update images?</label>
+                <label for="updateimage">Can the Admin user update/update images and description?</label>
                 <select name="updateimage" id="updateimage">
                     <option value="">Select an option</option>
                     <option value="1">Yes</option>
@@ -191,13 +191,13 @@ if (isset($_POST['submit']))
             </div>
 
             <div class="end">
-                <label for="updatedescription">Can the Admin user update the description?</label>
-                <select name="updatedescription" id="updatedescription">
+                <label for="can_create_node">Can the Admin user create new nodes?</label>
+                <select name="can_create_node" id="can_create_node">
                 <option value="">Select an option</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>
-                <span class="error <?=!isset($errors['updatedescription']) ? 'hidden' : "";?>">Please select an option!</span>
+                <span class="error <?=!isset($errors['can_create_node']) ? 'hidden' : "";?>">Please select an option!</span>
             </div>
 
             <div class="buttons">

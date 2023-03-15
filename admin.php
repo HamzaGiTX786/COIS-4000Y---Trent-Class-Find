@@ -41,7 +41,10 @@ if (isset($_POST['submit']))
         {
             $_SESSION['user'] = $row['username']; //load session credentials
             $_SESSION['id'] = $row['userId'];
-            echo $_SESSION['id'];
+            $_SESSION['can_create_building'] = $row['can_create_building'];
+            $_SESSION['can_update_delete'] = $row['can_update_delete'];
+            $_SESSION['can_create_node'] = $row['can_create_node'];
+
 
             header("Location: backend.php"); //redirect to the homepage
             
