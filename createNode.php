@@ -135,7 +135,6 @@ if (isset($_POST['submit']))
                             <label for="Neighbours"><?= $node[0];?></label>
                             <input type="checkbox" name="Neighbours[]" id="Neighbours" placeholder="Enter Node Neighbours" value="<?=$node[1];?>">
                         <?php endforeach; ?>
-                        <!-- <input type="text" name="Neighbours" id="Neighbours" placeholder="Enter Node Neighbours" value="" required /> -->
                          <span class="error <?=!isset($errors['Neighbours']) ? 'hidden' : "";?>">Please enter Node Neighbours ID</span>
                     </div>
                     <div id="buttons">    
