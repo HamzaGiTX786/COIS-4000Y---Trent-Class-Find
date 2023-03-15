@@ -1,18 +1,39 @@
 <?php
 include 'includes/library.php';
 
-$result = mysqli_query($conn,"SELECT * FROM Node WHERE ID='" . $_GET['ID'] . "'");
+
+
+$result = mysqli_query($conn,"SELECT * FROM Node WHERE ID='" . $_GET['ID'] . "'"); 
 $row= mysqli_fetch_array($result);
 
-$ID = $_POST['ID'] ?? null; 
+$oldID = $row['ID']; 
+$ID = $_POST['newID'] ?? null; 
 $Location = $_POST['Location'] ?? null;
-$Name = $_POST['Name'] ?? null;
-$Neighbours= $_POST['Neighbours'] ?? null;
-$jsonStore = json_encode($Neighbours);
-if(count($_POST)>0) {
-    mysqli_query($conn,"UPDATE Node set ID='" . $_POST['ID'] . "', Location='".$Location."', Name='" . $_POST['Name'] . "', Neighbours='" . $jsonStore . "' WHERE ID='" . $_POST['ID'] . "'");
-    $message = "Record Modified Successfully";
-    } 
+$Name=$_POST['Name'] ?? null;
+$Building_code=$_POST['Building_code'] ?? null;
+$Neighbours=$_POST['Neighbours'] ?? null;
+$json=json_encode($Neighbours); 
+
+
+echo $Location;
+if(isset($_POST['submit'])){
+
+$query = "UPDATE Node SET ID=?,Location=?,Name=?,Building_code=?,Neighbours=? WHERE ID=?"; //select the row of the table with the given username
+$stmt = mysqli_stmt_init($conn);
+
+if(!mysqli_stmt_prepare($stmt,$query))
+{
+    echo "SQL prepare failed";
+}else{
+if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Location,$Name,$Building_code,$json,$oldID)){
+    echo "bind failed";
+}
+if(!mysqli_stmt_execute($stmt)){
+    echo "exec failed";
+}
+}
+}
+
 
 ?>
 <html>
@@ -24,26 +45,29 @@ if(count($_POST)>0) {
 <div><?php if(isset($message)) { echo $message; } ?>
 </div>
 <div style="padding-bottom:5px;">
-<a href="modify.php">Node List</a>  
+<a href="modify.php">Modify List</a>    
 <p>--------------------------------------------</p>
 <td><a href="delete.php?userid=<?php echo $_GET['ID']; ?>">Delete</a></td>
 
 </div>
 ID: <br>
-<input type="hidden" name="ID" class="txtField" value="<?php echo $row['ID']; ?>">
-<input type="text" name="ID"  value="<?php echo $row['ID']; ?>">
+<input type="hidden" name="newID" class="txtField" value="<?php echo $row['ID']; ?>">
+<input type="text" name="newID"  value="<?php echo $row['ID']; ?>"> 
 <br>
 Location: <br>
-<input type="text" name="location" class="txtField" value="<?php echo $row['Location']; ?>">
+<input type="text" name="Location" class="txtField" value="<?php echo $row['Location']; ?>">
 <br>
-Name:<br>
+Name: <br>
 <input type="text" name="Name" class="txtField" value="<?php echo $row['Name']; ?>">
 <br>
-Neighbours:<br>
-<input type="text" name="Neighbours" class="txtField" value="<?php echo json_decode($row['Neighbours']); //try jsondecode the row first ?>">
+Building code: <br>
+<input type="text" name="Building_code" class="txtField" value="<?php echo $row['Building_code']; ?>">
+<br>
+Neighbours: <br>
+<input type="text" name="Neighbours" class="txtField" value="<?php echo json_decode($row['Neighbours']); ?>">
 <br>
 
-<input type="submit" name="submit" value="Submit" class="buttom">
+<button type="submit" name="submit" class="buttom">Submit</button>
 
 </form>
 </body>

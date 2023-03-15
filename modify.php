@@ -84,7 +84,7 @@ if (mysqli_num_rows($result_Room) > 0) {
 		<td><?php echo $row["Name"]; ?></td>
 		<td><?php echo $row["Type"]; ?></td>
 		<td><?php echo $row["Image"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["ID"]; ?>">Update</a></td>
+		<td><a href="updateRoom.php?ID=<?php echo $row["ID"]; ?>">Update</a></td>
       </tr>
 			<?php
 			$i++;
@@ -121,8 +121,8 @@ if (mysqli_num_rows($result_Building) > 0) {
 <td><?php echo $row["Code"]; ?></td>
 		<td><?php echo $row["Name"]; ?></td>
 		<td><?php echo $row["No_of_rooms"]; ?></td>
-		<td><?php echo $row["Geo-location"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["Code"]; ?>">Update</a></td>
+		<td><?php echo $row["Geo_location"]; ?></td>
+		<td><a href="updateBuilding.php?ID=<?php echo $row["Code"]; ?>">Update</a></td>
       </tr>
 			<?php
 			$i++;
@@ -162,7 +162,7 @@ if (mysqli_num_rows($result_Edge) > 0) {
 		<td><?php echo $row["End_Node"]; ?></td>
 		<td><?php echo $row["Distance"]; ?></td>
 		<td><?php echo $row["Image"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["ID"]; ?>">Update</a></td>
+		<td><a href="updateEdge.php?&ID=<?php echo $row["ID"]; ?>">Update</a></td>
       </tr>
 			<?php
 			$i++;
