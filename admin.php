@@ -44,6 +44,9 @@ if (isset($_POST['submit']))
             $_SESSION['can_create_building'] = $row['can_create_building'];
             $_SESSION['can_update_delete'] = $row['can_update_delete'];
             $_SESSION['can_create_node'] = $row['can_create_node'];
+            $_SESSION['can_create_users'] = $row['can_create_users'];
+            $_SESSION['can_create_route'] = $row['can_create_route'];
+            $_SESSION['can_create_rooms'] = $row['can_create_rooms'];
 
 
             header("Location: backend.php"); //redirect to the homepage

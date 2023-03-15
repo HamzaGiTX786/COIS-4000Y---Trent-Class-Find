@@ -13,6 +13,9 @@ $username = $_POST['username'] ?? null;
 $canchangebuilding = $_POST['canchangebuilding']??null;
 $updateimage = $_POST['updateimage']??null;
 $can_create_node = $_POST['can_create_node']??null;
+$can_create_users = $_POST['can_create_users']??null;
+$can_create_route = $_POST['can_create_route']??null;
+$can_create_rooms = $_POST['can_create_rooms']??null;
 
 if (isset($_POST['submit'])) 
 { //only do this code if the form has been submitted
@@ -64,6 +67,26 @@ if (isset($_POST['submit']))
     {
         $errors['can_create_node'] = true;
     }
+
+    if (!isset($can_create_users) || strlen($can_create_users) === 0) 
+    {
+        $errors['can_create_users'] = true;
+    }
+
+    if (!isset($can_create_route) || strlen($can_create_route) === 0) 
+    {
+        $errors['can_create_route'] = true;
+    }
+
+    if (!isset($can_create_rooms) || strlen($can_create_rooms) === 0) 
+    {
+        $errors['can_create_rooms'] = true;
+    }
+
+    if($canchangebuilding == 0 && $updateimage == 0 && $can_create_node == 0 && $can_create_rooms == 0 && $can_create_route == 0 && $can_create_users == 0)
+    {
+        $errors['no_privilege'] = true;
+    }
     
     if(count($errors)===0) //if no errors are encountered
     {
@@ -93,14 +116,14 @@ if (isset($_POST['submit']))
 
         if(count($errors)===0) //check if there are still no errors
         {
-            $query = "INSERT INTO Users values (NULL,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO Users values (NULL,?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$query))
         {
             echo "SQL prepare failed";
         }
         else{
-            mysqli_stmt_bind_param($stmt,"ssssssss",$username, password_hash($password, PASSWORD_BCRYPT) , $email, $fname, $lname,$canchangebuilding,$updateimage,$can_create_node);
+            mysqli_stmt_bind_param($stmt,"sssssssssss",$username, password_hash($password, PASSWORD_BCRYPT) , $email, $fname, $lname,$canchangebuilding,$updateimage,$can_create_node,$can_create_users,$can_create_route,$can_create_rooms);
             mysqli_stmt_execute($stmt);
 
             header("Location: admin");
@@ -134,6 +157,11 @@ if (isset($_POST['submit']))
     ?>
     <main>
     <form id="login" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+
+            <div class="start">
+            <span class="error <?=!isset($errors['no_privilege']) ? 'hidden' : "";?>">The admin user that you are trying to create has no privilege, Please create a user with some privilege!</span>
+            </div>
+
             <div class="start">
                 <label for="fname">Enter the First name :</label>
                 <input type="text" name="fname" id="fname" placeholder="Enter first name" value=""/>
@@ -171,6 +199,16 @@ if (isset($_POST['submit']))
             </div>
 
             <div class="end">
+                <label for="can_create_users">Can the Admin user create new Admin users?</label>
+                <select name="can_create_users" id="can_create_users">
+                <option value="">Select an option</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <span class="error <?=!isset($errors['can_create_users']) ? 'hidden' : "";?>">Please select an option!</span>
+            </div>
+
+            <div class="end">
                 <label for="canchangebuilding">Can the Admin user create new buildings?</label>
                 <select name="canchangebuilding" id="canchangebuilding">
                 <option value="">Select an option</option>
@@ -181,16 +219,6 @@ if (isset($_POST['submit']))
             </div>
 
             <div class="end">
-                <label for="updateimage">Can the Admin user update/update images and description?</label>
-                <select name="updateimage" id="updateimage">
-                    <option value="">Select an option</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                </select>
-                <span class="error <?=!isset($errors['updateimage']) ? 'hidden' : "";?>">Please select an option!</span>
-            </div>
-
-            <div class="end">
                 <label for="can_create_node">Can the Admin user create new nodes?</label>
                 <select name="can_create_node" id="can_create_node">
                 <option value="">Select an option</option>
@@ -198,6 +226,36 @@ if (isset($_POST['submit']))
                     <option value="0">No</option>
                 </select>
                 <span class="error <?=!isset($errors['can_create_node']) ? 'hidden' : "";?>">Please select an option!</span>
+            </div>
+
+            <div class="end">
+                <label for="can_create_route">Can the Admin user create new Routes?</label>
+                <select name="can_create_route" id="can_create_route">
+                <option value="">Select an option</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <span class="error <?=!isset($errors['can_create_route']) ? 'hidden' : "";?>">Please select an option!</span>
+            </div>
+
+            <div class="end">
+                <label for="can_create_rooms">Can the Admin user create new Rooms?</label>
+                <select name="can_create_rooms" id="can_create_rooms">
+                <option value="">Select an option</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <span class="error <?=!isset($errors['can_create_rooms']) ? 'hidden' : "";?>">Please select an option!</span>
+            </div>
+
+            <div class="end">
+                <label for="updateimage">Can the Admin user update/delete images and description?</label>
+                <select name="updateimage" id="updateimage">
+                    <option value="">Select an option</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+                <span class="error <?=!isset($errors['updateimage']) ? 'hidden' : "";?>">Please select an option!</span>
             </div>
 
             <div class="buttons">
