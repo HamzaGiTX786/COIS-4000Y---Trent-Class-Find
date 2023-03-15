@@ -1,3 +1,16 @@
+<?php
+
+session_start();
+
+
+if(!isset($_SESSION['id']))
+{
+header("Location: admin.php");
+exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,12 +34,31 @@
     <main>
 
     <ul class="wrapper">
-    <li><a href="createaccount">Add an Admin User</a></li>
+
+        <?php if($_SESSION['can_create_users'] == 1): ?>
+        <li><a href="createaccount">Add an Admin User</a></li>
+        <?php endif; ?>
+
+        <?php if($_SESSION['can_create_node'] == 1): ?>
         <li><a href="createNode.php">Create Node</a></li>
+        <?php endif; ?>
+
+        <?php if($_SESSION['can_create_route'] == 1): ?>
         <li><a href="createRoute.php">Create Route</a></li>
+        <?php endif; ?>
+
+        <?php if($_SESSION['can_create_rooms'] == 1): ?>
         <li><a href="createRoom.php">Create Room</a></li>
+        <?php endif; ?>
+
+        <?php if($_SESSION['can_create_building'] == 1): ?>
         <li><a href="createBuilding.php">Create Building</a></li>
+        <?php endif; ?>
+
+        <?php if($_SESSION['can_update_delete'] == 1): ?>
         <li><a href="modify.php">Modify/Delete</a></li>
+        <?php endif; ?>
+
     </ul>
        
 

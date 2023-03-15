@@ -2,7 +2,7 @@
 include 'includes/library.php';
 include 'includes/Routing.php';
 
-        $query = "SELECT Name,ID FROM Node ORDER BY Name ASC";
+        $query = "SELECT Name,Code FROM Buildings ORDER BY Name ASC";
         $stmt = mysqli_stmt_init($conn);
         if(!mysqli_stmt_prepare($stmt,$query))
         {
@@ -14,12 +14,13 @@ include 'includes/Routing.php';
             $names = mysqli_fetch_all($result); // get output for the searched item
         }
 
-$startpoint = $_POST['startpoint'] ?? null;
-$endpoint = $_POST['endpoint'] ?? null;
+$startpoint = $_POST['startroom'] ?? null;
+$endpoint = $_POST['endroom'] ?? null;
 
 $errors = array();
 $show = array();
 $imgs = array();
+$descript = array();
 
 if(isset($_POST['submit'])){
 
@@ -32,7 +33,14 @@ if(isset($_POST['submit'])){
     {
         $errors['endpoint'] = true;
     }
+
+    if($endpoint == $startpoint && sizeof($errors) == 0)
+    {
+        $errors['same'] = true;
+    }
     
+
+  
     if(count($errors)===0){ //if no errors are encountered
 
         $show['route'] = true;
@@ -40,13 +48,13 @@ if(isset($_POST['submit'])){
         $startpointnode = $Map->GetNode($startpoint);
         $endpointnode = $Map->GetNode($endpoint);
 
+
         $tmp_path = $Map->FastestRoute($startpointnode,$endpointnode);
 
         
         for($i = 0; $i < sizeof($tmp_path) -1 ; $i++){
              
-        
-            $queryimage = "SELECT Image FROM Edge WHERE Start_Node = ? AND End_Node = ?";
+            $queryimage = "SELECT Image,Description FROM Edge WHERE Start_Node = ? AND End_Node = ?";
             $stmt = mysqli_stmt_init($conn);
             if(!mysqli_stmt_prepare($stmt,$queryimage))
              {
@@ -59,18 +67,27 @@ if(isset($_POST['submit'])){
               $image = mysqli_fetch_all($result); // get output for the searched item
 
              foreach($image as $pic){
-                foreach($pic as $p)
+                for($j =0; $j < sizeof($pic) -1; $j++)
+                //foreach($pic as $p)
                 {
-                    if(str_contains($p,","))
+                    if(str_contains($pic[$j],","))
                     {
-                        $p = explode(",",$p);
+                        $p = explode(",",$pic[$j]);
                         foreach($p as $store){
                             array_push($imgs,$store);
                         }
                     }
                     else{
-                        array_push($imgs,$p);
+                        array_push($imgs,$pic[$j]);
                     }
+
+
+                }
+                array_push($imgs,$pic[sizeof($pic)-1]);
+
+                for($k=sizeof($pic)-1; $k<sizeof($pic); $k++)
+                {
+                    array_push($descript,$pic[$k]);
                 }
                 
              }
@@ -117,7 +134,7 @@ if(isset($_POST['submit'])){
                 <select name="startroom" id="startroom" class="hidden">
                  <option value="">Pick a Room for the Start point</option>  
                 </select>
-                <span class="error <?=!isset($errors['startroom']) ? 'hidden' : "";?>">Please select a room as your starting point</span>
+                <span class="error <?=!isset($errors['same']) ? 'hidden' : "";?>">Start and End point cannot be the same</span>
 
                 
             </div>
@@ -135,7 +152,7 @@ if(isset($_POST['submit'])){
                 <select name="endroom" id="endroom" class="hidden">
                  <option value="">Pick a Room for the Start point</option>  
                 </select>
-                <span class="error <?=!isset($errors['endroom']) ? 'hidden' : "";?>">Please select a room as your end point</span>
+                <span class="error <?=!isset($errors['same']) ? 'hidden' : "";?>">Start and End point cannot be the same</span>
             </div>
         </div>
 
@@ -148,7 +165,11 @@ if(isset($_POST['submit'])){
         <ol>
             <?php foreach($imgs as $img):?>
             <li>
+                <?php if(!in_array($img,$descript)):?>
                 <img src="http://loki.trentu.ca/~classfind/www_data/img/<?= $img?>" alt="Image of route">
+                <?php else: ?>
+                    <figcaption><?=$img?></figcaption>
+                <?php endif;?>
             </li>
             <?php endforeach; ?>
         </ol>
