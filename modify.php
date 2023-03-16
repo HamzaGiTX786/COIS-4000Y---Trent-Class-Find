@@ -100,7 +100,6 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 	<div>
 	<h2>Room</h2>
 <?php if (sizeof($Rooms) > 0) :?>
-
 <table>
 	  <tr>
 	    <th>ID</th>
@@ -119,7 +118,8 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 		<td><?php echo $row[2]; ?></td>
 		<td><?php echo $row[3]; ?></td>
 		<td><?php echo $row[4]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+		<td><a href="updateRoom.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+
       </tr>
 
 		<?php endforeach; ?>
@@ -149,7 +149,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 			<td><?php echo $row[1]; ?></td>
 			<td><?php echo $row[2]; ?></td>
 			<td><?php echo $row[3]; ?></td>
-			<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+			<td><a href="updateBuilding.php?ID=<?php echo $row[0]; ?>">Update</a></td>
 		</tr>
 			<?php endforeach; ?>
 	</table>
@@ -182,8 +182,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 		<td><?php echo $row[3]; ?></td>
 		<td><?php echo $row[4]; ?></td>
 		<td><?php echo $row[5]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
-      </tr>
+		<td><a href="updateEdge.php?ID=<?php echo $row[0]; ?>">Update</a></td>
 			<?php endforeach; ?>
 </table>
  <?php else: ?>
