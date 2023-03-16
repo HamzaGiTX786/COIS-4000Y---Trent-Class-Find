@@ -1,13 +1,51 @@
 <?php
 include 'includes/library.php';
 
+$querynodes = "SELECT * FROM Node";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt,$querynodes))
+{
+    echo "SQL prepare failed";
+}else{
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$Node = mysqli_fetch_all($result); // get output for the searched item
+}
+
+$queryroom = "SELECT * FROM Room";
+$stmtroom = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmtroom,$queryroom))
+{
+    echo "SQL prepare failed";
+}else{
+mysqli_stmt_execute($stmtroom);
+$result_room = mysqli_stmt_get_result($stmtroom);
+$Rooms = mysqli_fetch_all($result_room); // get output for the searched item
+}
+
+$querybuild = "SELECT * FROM Buildings";
+$stmtbuild = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmtbuild,$querybuild))
+{
+    echo "SQL prepare failed";
+}else{
+mysqli_stmt_execute($stmtbuild);
+$result_build = mysqli_stmt_get_result($stmtbuild);
+$Buildings = mysqli_fetch_all($result_build); // get output for the searched item
+}
+
+$queryedge = "SELECT * FROM Edge";
+$stmtedge = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmtedge,$queryedge))
+{
+    echo "SQL prepare failed";
+}else{
+mysqli_stmt_execute($stmtedge);
+$result_edge = mysqli_stmt_get_result($stmtedge);
+$Edges = mysqli_fetch_all($result_edge); // get output for the searched item
+}
 
 
-  
-$result_Node = mysqli_query($conn,"SELECT * FROM Node");
-$result_Room = mysqli_query($conn,"SELECT * FROM Room");
-$result_Building = mysqli_query($conn,"SELECT * FROM Buildings");
-$result_Edge = mysqli_query($conn,"SELECT * FROM Edge");
 ?> 
 
 <!DOCTYPE html>
@@ -19,172 +57,142 @@ $result_Edge = mysqli_query($conn,"SELECT * FROM Edge");
     <link rel="stylesheet" href="styles/master.css"/>
     <script src="https://kit.fontawesome.com/e156dbae2b.js" crossorigin="anonymous"></script>
 
-    <title>Modify</title>
+    <title>Admin Backend:Trent Class Find</title>
 </head>
 <body>
-	<h2>Nodes</h2>
-<?php
-if (mysqli_num_rows($result_Node) > 0) {
-?>
-<table>
-	  <tr>
-	    <td>ID</td>
-		<td>Location</td>
-		<td>Name</td>
-		<td>Neighbours</td>
-        <td>Action</td>
-		
-	  </tr>
-			<?php
-			$i=0;
-			while($row = mysqli_fetch_array($result_Node)) {
-			?>
-	  <tr>
-<td><?php echo $row["ID"]; ?></td>
-		<td><?php echo $row["Location"]; ?></td>
-		<td><?php echo $row["Name"]; ?></td>
-		<td><?php echo $row["Neighbours"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["ID"]; ?>">Update</a></td>
-      </tr>
-			<?php
-			$i++;
-			}
-			?>
-</table>
- <?php
-}
-else
-{
-    echo "No result found for Nodes";
-}
-// 
-?>
-<?php
-// maybe set $i to 0???
-if (mysqli_num_rows($result_Room) > 0) {
-?>
-<h2>Room</h2>
-<table>
-	  <tr>
-	    <td>ID</td>
-		<td>Building Code</td>
-		<td>Name</td>
-		<td>Type</td>
-		<td>Image</td>
-        <td>Action</td>
-		
-	  </tr>
-			<?php
-			$i=0;
-			while($row = mysqli_fetch_array($result_Room)) {
-			?>
-	  <tr>
-<td><?php echo $row["ID"]; ?></td>
-		<td><?php echo $row["Building_code"]; ?></td>
-		<td><?php echo $row["Name"]; ?></td>
-		<td><?php echo $row["Type"]; ?></td>
-		<td><?php echo $row["Image"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["ID"]; ?>">Update</a></td>
-      </tr>
-			<?php
-			$i++;
-			}
-			?>
-</table>
- <?php
-}
-else
-{
-    echo "No result found for Room";
-}
-// building modify
-?>
-<?php
-// maybe set $i to 0???
-if (mysqli_num_rows($result_Building) > 0) {
-?>
-<h2>Building</h2>
-<table>
-	  <tr>
-	    <td>Code</td>
-		<td>Name</td>
-		<td>Number of Rooms</td>
-		<td>Geo-location</td>
-        <td>Action</td>
-		
-	  </tr>
-			<?php
-			$i=0;
-			while($row = mysqli_fetch_array($result_Building)) {
-			?>
-	  <tr>
-<td><?php echo $row["Code"]; ?></td>
-		<td><?php echo $row["Name"]; ?></td>
-		<td><?php echo $row["No_of_rooms"]; ?></td>
-		<td><?php echo $row["Geo-location"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["Code"]; ?>">Update</a></td>
-      </tr>
-			<?php
-			$i++;
-			}
-			?>
-</table>
- <?php
-}
-else
-{
-    echo "No result found for building";
-}
-//modify edge 
-?>
-<?php
-// maybe set $i to 0???
-if (mysqli_num_rows($result_Edge) > 0) {
-?>
-<h2>Route</h2>
-<table>
-	  <tr>
-	    <td>ID</td>
-		<td>Start Node</td>
-		<td>End Node</td>
-		<td>Distance</td>
-		<td>Images</td>
-        <td>Action</td>
-		
-	  </tr>
-			<?php
-			$i=0;
-			while($row = mysqli_fetch_array($result_Edge)) {
-			?>
-	  <tr>
-<td><?php echo $row["ID"]; ?></td>
-		<td><?php echo $row["Start_Node"]; ?></td>
-		<td><?php echo $row["End_Node"]; ?></td>
-		<td><?php echo $row["Distance"]; ?></td>
-		<td><?php echo $row["Image"]; ?></td>
-		<td><a href="update.php?ID=<?php echo $row["ID"]; ?>">Update</a></td>
-      </tr>
-			<?php
-			$i++;
-			}
-			?>
-</table>
- <?php
-}
-else
-{
-    echo "No result found for building";
-}
-//modify edge done
-?>
-
-   
-    
-    <footer>
-        <?php
-    include 'includes/footer.php';
+<a href="index.php"><?php
+        include 'includes/header.php';
+    ?></a>
+    <div class="navmain">
+    <?php
+        include 'includes/nav.php';
     ?>
+	<main>
+	<div>
+	<h2>Nodes</h2>
+		<?php if (sizeof($Node) > 0) :?>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Location</th>
+				<th>Name</th>
+				<th>Neighbours</th>
+				<th>Action</th>
+			</tr>
+
+			<?php foreach($Node as $row): ?>
+			<tr>
+				<td><?php echo $row[0]; ?></td>
+				<td><?php echo $row[1]; ?></td>
+				<td><?php echo $row[2]; ?></td>
+				<td><?php echo $row[3];?></td>
+				<td><?php echo $row[4]; ?></td>
+				<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+			</tr>
+				<?php endforeach; ?>
+		</table>
+	<?php else : ?>
+		No result found for Nodes
+	<?php endif; ?>
+	</div>
+
+	<div>
+	<h2>Room</h2>
+<?php if (sizeof($Rooms) > 0) :?>
+
+<table>
+	  <tr>
+	    <th>ID</th>
+		<th>Building Code</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Image</th>
+        <th>Action</th>
+		
+	  </tr>
+			
+	<?php foreach($Rooms as $row) :?>
+	  <tr>
+		<td><?php echo $row[0]; ?></td>
+		<td><?php echo $row[1]; ?></td>
+		<td><?php echo $row[2]; ?></td>
+		<td><?php echo $row[3]; ?></td>
+		<td><?php echo $row[4]; ?></td>
+		<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+      </tr>
+
+		<?php endforeach; ?>
+</table>
+
+	<?php else : ?>
+	No result found for Room
+	<?php endif; ?>
+
+</div>
+
+<div>
+	<h2>Building</h2>
+	<?php  if (sizeof($Buildings) > 0) :?>
+	<table>
+		<tr>
+			<th>Code</td>
+			<td>Name</td>
+			<td>Number of Rooms</td>
+			<td>Geo-location</td>
+			<td>Action</td>
+		</tr>
+
+			<?php foreach($Buildings as $row):?>
+		<tr>
+			<td><?php echo $row[0]; ?></td>
+			<td><?php echo $row[1]; ?></td>
+			<td><?php echo $row[2]; ?></td>
+			<td><?php echo $row[3]; ?></td>
+			<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+		</tr>
+			<?php endforeach; ?>
+	</table>
+
+ 	<?php else: ?>
+     No result found for building
+	<?php endif; ?>
+</div>
+
+<div>
+<h2>Route</h2>
+<?php if (sizeof($Edges) > 0) : ?>
+
+<table>
+	  <tr>
+	    <th>ID</th>
+		<th>Start Node</th>
+		<th>End Node</th>
+		<th>Description</th>
+		<th>Distance</th>
+		<th>Images</th>
+        <th>Action</th>
+	  </tr>
+
+		<?php foreach($Edges as $row) : ?>
+	  <tr>
+		<td><?php echo $row[0]; ?></td>
+		<td><?php echo $row[1]; ?></td>
+		<td><?php echo $row[2]; ?></td>
+		<td><?php echo $row[3]; ?></td>
+		<td><?php echo $row[4]; ?></td>
+		<td><?php echo $row[5]; ?></td>
+		<td><a href="update.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+      </tr>
+			<?php endforeach; ?>
+</table>
+ <?php else: ?>
+   No result found for building
+<?php endif; ?>
+</div>
+</main>
+	</div>
+    <footer>
+        <?php include 'includes/footer.php'; ?>
     </footer> 
     </body>
-
 </html>

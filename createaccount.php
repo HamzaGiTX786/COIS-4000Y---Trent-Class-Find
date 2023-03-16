@@ -156,7 +156,7 @@ if (isset($_POST['submit']))
         include 'includes/nav.php';
     ?>
     <main>
-    <form id="login" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+    <form id="account" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 
             <div class="start">
             <span class="error <?=!isset($errors['no_privilege']) ? 'hidden' : "";?>">The admin user that you are trying to create has no privilege, Please create a user with some privilege!</span>
