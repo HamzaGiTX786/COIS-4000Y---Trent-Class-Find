@@ -68,6 +68,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
         include 'includes/nav.php';
     ?>
 	<main>
+		<form >
 	<div>
 	<h2>Nodes</h2>
 		<?php if (sizeof($Node) > 0) :?>
@@ -189,6 +190,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
    No result found for building
 <?php endif; ?>
 </div>
+</form>
 </main>
 	</div>
     <footer>
