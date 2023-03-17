@@ -130,7 +130,7 @@ if (isset($_POST['submit']))
                         </select>
                     </div>
                     <div>
-                        <label for="Neighbours">Neighbours</label>
+                        <label for="Neighbours">Neighbours:</label>
                         <?php foreach($nodes as $node):?>
                             <label for="Neighbours"><?= $node[0];?></label>
                             <input type="checkbox" name="Neighbours[]" id="Neighbours" placeholder="Enter Node Neighbours" value="<?=$node[1];?>">
