@@ -39,8 +39,21 @@ if($inbuild === false){
     die();
 }
 
-$result = mysqli_query($conn,"SELECT * FROM Buildings WHERE Code='" . $_GET['ID'] . "'");
-$row= mysqli_fetch_array($result);
+$query = "SELECT * FROM Buildings WHERE Code = ?";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt,$query))
+{
+    echo "SQL prepare failed";
+}
+else{
+    if(!mysqli_stmt_bind_param($stmt,"s",$building_code)){
+        echo "bind failed"; 
+    } 
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $row = mysqli_fetch_assoc($result); // get output for the searched item
+}
+
 
 $oldID = $row['Code']; 
 $ID = $_POST['new_code'] ?? null; 
@@ -94,7 +107,7 @@ if(!mysqli_stmt_execute($stmt)){
 
         <div class="start">
         <a href="modify.php">Modify List</a>    
-        <a href="deleteBuilding.php?userid=<?php echo $_GET['ID']; ?>">Delete</a>
+        <a href="deleteBuilding.php?userid=<?php echo $building_code; ?>">Delete</a>
         </div>
 
         <div class="start">
