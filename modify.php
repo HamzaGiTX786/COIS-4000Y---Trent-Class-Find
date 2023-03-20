@@ -182,7 +182,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 		<td><?php echo $row[3]; ?></td>
 		<td><?php echo $row[4]; ?></td>
 		<td><?php echo $row[5]; ?></td>
-		<td><a href="updateEdge.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+		<td><a href="updateEdge.php?start_node=<?= $row[1]; ?>&end_node=<?= $row[2]; ?>">Update</a></td>
 			<?php endforeach; ?>
 </table>
  <?php else: ?>

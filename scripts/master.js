@@ -125,6 +125,64 @@ startnode.onchange = () =>{
 
         xhttp.send();
 }}
+
+//----------------------------------------------------------------------------------------------------------
+
+
+var delete_image = document.getElementsByClassName("fa-solid fa-trash");
+
+if(delete_image != null){
+
+
+for(let i=0; i< delete_image.length;i++) {
+
+    delete_image = document.getElementsByClassName("fa-solid fa-trash");
+    console.log(delete_image);
+
+    delete_image[i].addEventListener("click", (ev) =>{
+        
+
+        const yes = "<button id='yes' type='button'>Yes</button>"; 
+        const no = "<button id='no' type='button'>No</button>";
+
+        delete_image[i].parentNode.insertAdjacentHTML("beforeend", yes);
+        delete_image[i].parentNode.insertAdjacentHTML("beforeend", no);
+        delete_image[i].remove();
+
+        var dont_delete = document.getElementById("no");
+        var yes_delete = document.getElementById("yes");
+
+        dont_delete.addEventListener("click", (ev)=>{ // still does not work!!! How to make the trash bin part of delete_image 
+            dont_delete.parentNode.insertAdjacentHTML("beforeend", "<i class='fa-solid fa-trash'></i>");
+            yes_delete.remove();
+            dont_delete.remove();
+            i =0;
+        });
+
+        yes_delete.addEventListener("click", (ev) =>{
+            var name = yes_delete.parentNode.previousElementSibling.innerText;
+
+            yes_delete.parentNode.previousElementSibling.remove();
+            yes_delete.parentNode.insertAdjacentHTML("beforeend","<lable for='updateimage[]'>Upload new image:</lable>");
+            yes_delete.parentNode.insertAdjacentHTML("beforeend","<input type='file' id='updateimage' name='updateimage[]' multiple>");
+            yes_delete.remove();
+            dont_delete.remove();
+
+            //const xhttp = new XMLHttpRequest();
+
+            // xhttp.open("GET", "https://loki.trentu.ca/~classfind/4000/includes/");
+        });
+
+
+
+        //delete_image[i].parentNode.parentNode.remove();
+
+
+    })
+    
+}
+
+}
           
           
 });
