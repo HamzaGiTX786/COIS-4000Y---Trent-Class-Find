@@ -77,7 +77,7 @@ if (isset($_POST['submit']))
     {
         echo "SQL prepare failed";
     }else{
-    if(!mysqli_stmt_bind_param($stmt,"sssss",$Start_Node,$End_Node,$Distance,$Description,$images)){
+    if(!mysqli_stmt_bind_param($stmt,"sssss",$Start_Node,$End_Node,$Description,$Distance,$images)){
         echo "bind failed";
     }
     if(!mysqli_stmt_execute($stmt)){
