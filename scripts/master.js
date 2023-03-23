@@ -213,7 +213,7 @@ if(delete_images != null){
 
                 const xhttp_img = new XMLHttpRequest();
 
-                xhttp_img.open("GET","https://loki.trentu.ca/~classfind/4000/includes/upload_delete.php?newimgs="+img['Image']+"&oldID="+id);
+                xhttp_img.open("GET","https://loki.trentu.ca/~classfind/4000/includes/upload_delete.php?newimgs="+img['Image']+"&oldID="+id+"&delete="+name);
 
                 xhttp_img.addEventListener("load", (ev) =>{
                     if(xhttp_img.status == 200){

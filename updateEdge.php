@@ -58,7 +58,7 @@ else{
 }
 }
 else{
-var_dump($_FILES);
+
 $oldID = $_POST['oldID'];
 $ID = $_POST['newID'] ?? null; 
 $Start_Node = $_POST['Start_Node'] ?? null;
@@ -93,22 +93,53 @@ if(isset($_POST['submit'])){
 
     $images = implode(",",$filename);
 
-    var_dump($images);
+    $q = "SELECT Image FROM Edge WHERE ID=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$q))
+    {
+        echo "SQL prepare failed";
+    }
+    else{
+        if(!mysqli_stmt_bind_param($stmt,"s",$oldID)){
+            echo "bind failed"; 
+        } 
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $img = mysqli_fetch_assoc($result); // get output for the searched item
+    }
 
-// $query = "UPDATE Edge SET ID=?,Start_Node=?,End_Node=?,Description=?,Distance=? WHERE ID=?"; //select the row of the table with the given username
-// $stmt = mysqli_stmt_init($conn);
+   $img['Image'] = str_replace(" ",$images,$img['Image']);
 
-// if(!mysqli_stmt_prepare($stmt,$query))
-// {
-//     echo "SQL prepare failed";
-// }else{
-// if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Start_Node,$End_Node,$Description,$Distance,$oldID)){
-//     echo "bind failed";
-// }
-// if(!mysqli_stmt_execute($stmt)){
-//     echo "exec failed";
-// }
-// }
+
+    $query = "UPDATE Edge SET ID=?,Start_Node=?,End_Node=?,Description=?,Distance=?,Image=? WHERE ID=?"; //select the row of the table with the given username
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt,$query))
+    {
+        echo "SQL prepare failed";
+    }else{
+    if(!mysqli_stmt_bind_param($stmt,"sssssss",$ID,$Start_Node,$End_Node,$Description,$Distance,$img['Image'],$oldID)){
+        echo "bind failed";
+    }
+    if(!mysqli_stmt_execute($stmt)){
+        echo "exec failed";
+    }
+
+    for($k = 0; $k<sizeof($tempname);$k++){
+
+        if(move_uploaded_file($tempname[$k],$folder.$filename[$k]))
+       {
+          //do nothing
+       }
+       else{
+           echo "Image upload error";
+           die();
+       }
+    }
+    
+    header("Location: modify");
+    }
+
 }
 }
 ?>
