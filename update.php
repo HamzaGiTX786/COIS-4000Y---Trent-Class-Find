@@ -61,10 +61,12 @@ $Location = $_POST['Location'] ?? null;
 $Name=$_POST['Name'] ?? null;
 $Building_code=$_POST['Building_code'] ?? null;
 $Neighbours=$_POST['Neighbours'] ?? null;
-$json=json_encode($Neighbours); 
 
 
 if(isset($_POST['submit'])){
+
+    $NeighbourNodes = implode(",",$Neighbours);
+    $json=json_encode($NeighbourNodes); 
 
 $query = "UPDATE Node SET ID=?,Location=?,Name=?,Building_code=?,Neighbours=? WHERE ID=?"; //select the row of the table with the given username
 $stmt = mysqli_stmt_init($conn);
@@ -111,7 +113,7 @@ if(!mysqli_stmt_execute($stmt)){
     
         <div class="start">
         <a href="modify.php">Modify List</a>    
-        <a href="delete.php?userid=<?php echo $_GET['ID']; ?>">Delete</a>
+        <a href="delete.php?nodeID=<?php echo $row['ID']; ?>">Delete Node</a>
         </div>
 
     <div class="start">

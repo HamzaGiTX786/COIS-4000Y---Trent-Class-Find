@@ -172,7 +172,7 @@ if(isset($_POST['submit'])){
 
     <div class="start">
     <a href="modify.php">Modify List</a>    
-    <a href="deleteEdge.php?userid=<?php echo $_GET['ID']; ?>">Delete</a>
+    <a href="deleteEdge.php?userid=<?php echo $row['ID'] ?>">Delete</a>
     </div>
 
     <div class="start">
