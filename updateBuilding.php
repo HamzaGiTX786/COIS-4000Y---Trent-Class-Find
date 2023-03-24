@@ -1,6 +1,8 @@
 <?php
 include 'includes/library.php';
 
+if(!isset($_POST['submit'])){
+
 if(!isset($_GET['ID'])){
     header("Location: modify");
     die();
@@ -53,7 +55,8 @@ else{
     $result = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($result); // get output for the searched item
 }
-
+}
+else{
 
 $oldID = $row['Code']; 
 $ID = $_POST['new_code'] ?? null; 
@@ -62,7 +65,6 @@ $numroom = $_POST['No_of_rooms'] ?? null;
 $geo= $_POST['Geo-location'] ?? null;
 
 
-if(isset($_POST['submit'])){
 $query = "UPDATE Buildings SET Code=?,Name=?,No_of_rooms=?,Geo_location=? WHERE Code=?"; //select the row of the table with the given username
 $stmt = mysqli_stmt_init($conn);
 if(!mysqli_stmt_prepare($stmt,$query))
@@ -75,7 +77,9 @@ if(!mysqli_stmt_bind_param($stmt,"sssss",$ID,$Name,$numroom,$geo,$oldID)){
 if(!mysqli_stmt_execute($stmt)){
     echo "exec failed";
 }
+header("Location: modify");
 }
+
 }
 
 
@@ -99,15 +103,12 @@ if(!mysqli_stmt_execute($stmt)){
         include 'includes/nav.php';
     ?>
     <main>
-        <div>
-            <?php if(isset($message)) { echo $message; } ?>
-        </div>
 
         <form name="updatebuilding" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
 
         <div class="start">
         <a href="modify.php">Modify List</a>    
-        <a href="deleteBuilding.php?userid=<?php echo $building_code; ?>">Delete</a>
+        <a href="deleteBuilding.php?build_ID=<?php echo $row['Code']; ?>">Delete</a>
         </div>
 
         <div class="start">

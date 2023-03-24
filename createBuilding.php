@@ -31,7 +31,6 @@ if (isset($_POST['submit']))
     
     if(count($errors)===0) //if no errors are encountered
     {
-        echo "made it";
     $query = "INSERT INTO Buildings VALUES(?,?,?,?)"; //select the row of the table with the given username
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$query))
@@ -45,7 +44,7 @@ if (isset($_POST['submit']))
     if(!mysqli_stmt_execute($stmt)){
         echo "exec failed";
     }
-    echo "exe done"; 
+    header("Location: admin");
     }
 }
 }
