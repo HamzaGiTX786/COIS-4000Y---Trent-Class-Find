@@ -1,22 +1,26 @@
 @import url("reset.css"); /*Adding the reset stylesheet*/
 
+html{
+    height: 100%;
+}
+
 body{
     background-color: #777;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     flex-grow: 1;
+    min-height: 100%;
     font-family:"museo-sans";
 }
-
+ 
 header{
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
     background-color: rgb(21, 71, 52);
     color: white;
-    margin-bottom: 2em;
-}
+} 
 
 h1{
     font-size: x-large;
@@ -26,10 +30,7 @@ h1{
 
 footer{
     display: flex;
-    flex-direction: row;
-    align-items:flex-end;
-    justify-content:center;
-    flex-grow: 1;
+    flex-direction: column;
 }
 
 main{
@@ -43,15 +44,52 @@ main{
 }
 
 form{
+    display: flex;
     background-color: #B15533;
     padding: 2em;
-    border: .5em solid black;
-    border-radius: 2em;
-    width: 50%;
-    display: flex;
-    justify-content: center;
+    border: .5em solid #fff;
+    border-radius: 0.1em;
+    width: 70%;
     flex-direction: column;
     align-items: center;
+    margin: 1em;
+}
+
+#createnode{
+    display: flex;
+}
+
+#createnode div{
+    padding: 0.3em;
+}
+
+#noderesults label{
+    display: inline-block;
+    padding: 0.1em;
+}
+
+#createroom{
+    display: flex;
+}
+
+#createroom div{
+    padding: 0.3em;
+}
+
+#createbuilding{
+    display: flex;
+}
+
+#createbuilding div{
+    padding: 0.3em;
+}
+
+li{
+    list-style: none;
+}
+
+i{
+    padding-right: 1em;
 }
 
 .start,.end,.submit{
@@ -87,14 +125,8 @@ button:hover{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    padding:2em;
-    background-color: #B15533;
-    padding-bottom: .5em;
-    border: .5em solid black;
-    border-radius: 2em;
-    margin: 1em;
-    flex-grow: 1;
-    align-items: flex-end;
+    background-color: rgb(21, 71, 52);
+    padding-left: 7em;
 }
 
 .buildingselector{
@@ -112,8 +144,6 @@ button:hover{
     padding:2em;
     background-color: #B15533;
     padding-bottom: .5em;
-    border: .5em solid black;
-    border-radius: 2em;
     margin: 1em;
 }
 
@@ -125,15 +155,32 @@ ul,p{
 section.links ul li{
     padding:.4em
 }
+
 ul li{
     padding:.2em
 }
 
+#foot{
+    display: flex;
+    align-content: center;
+}
+
+#foot div{
+    padding-right: 2em;
+}
+
+footer ul{
+    padding: 0.5em;
+}
+
+#socials{
+    display: flex;
+    align-content: center;
+}
 
 section a, section h2, .wrapper h2, ul.wrapper li a, form h2{
     color: white;
     text-decoration: none;
-    text-align: center;
 }
 
 section h2, .wrapper h2, form h2{
@@ -152,18 +199,36 @@ section i{
 
 nav{
     justify-content: flex-start;
-    background-color: #fff;
-    border: .5em solid black;
-    padding: 1em;
-    border-radius: 2em;
-    margin-left: .3em;
+    background-color: #444;
+    width: 10em;
+    padding: 0;
+    min-height: 100%;
+    font-family: "museo-sans";
 }
 
 nav a{
-    color: #000;
+    color: #fff;
     text-decoration: none;
     text-align: center;
 }
+
+nav ul{
+    margin: 0;
+    padding: 1em;
+    padding-top: 2em;
+}
+
+nav li{
+    padding-bottom: 1.5em;
+    color: #fff;
+}
+
+#navmenu{
+    display: flex;
+    color: #fff;
+    font-family: "museo-sans";
+}
+
 
 .hidden{
     display: none;
