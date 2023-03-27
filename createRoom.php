@@ -131,8 +131,8 @@ if (isset($_POST['submit']))
    
     <form id="create" name="create" method="post" enctype="multipart/form-data" novalidate>
     <h2>Create Room</h2>
-    <div id="createroom">
-                    <div>
+    
+                    <div class="start">
                         <label for="Building_Name">Building Name</label>
                         <select name="Building_Name" id="Building_Name">
                         <option value="">Pick a Building the room belongs to</option>
@@ -143,19 +143,19 @@ if (isset($_POST['submit']))
                          <span class="error <?=!isset($errors['Building_Name']) ? 'hidden' : "";?>">Please select the Building the room belongs to </span>
                     </div>
 
-                    <div>
+                    <div class="start">
                         <label for="Room_Code">Room Code</label>
                         <input type="text" name="Room_Code" id="Room_Code" placeholder="Enter the room code" value="" required/>
                         <span class="error <?=!isset($errors['Room_Name']) ? 'hidden' : "";?>">Please enter Room Code</span>
                     </div>
                     
-                    <div>
+                    <div class="start">
                         <label for="Room_Name">Room Name</label>
                         <input type="text" name="Room_Name" id="Room_Name" placeholder="Enter Room Name" value="" required />
                          <span class="error <?=!isset($errors['Room_Name']) ? 'hidden' : "";?>">Please enter Room Name</span>
                     </div>
 
-                    <div>
+                    <div class="start">
                         <label for="Room_Type">Type of room</label>
                         <select name="Room_Type" id="Room_Type">
                             <option value="">Please select the type of room</option>
@@ -168,12 +168,12 @@ if (isset($_POST['submit']))
                          <span class="error <?=!isset($errors['Room_Type']) ? 'hidden' : "";?>">Please select a Type for the room</span>
                     </div>
 
-                    <div>
+                    <div class="start">
                     <label for="roomimage">Image(s)</label>
                         <input type="file" id="roomimage" name="roomimage[]" multiple>
                          <span class="error <?=!isset($errors['roomimage']) ? 'hidden' : "";?>">Please Upload Images</span>
                     </div>
-            </div>
+
                     <div id="buttons">    
                     <button type="submit" name="submit">Create Room</button>
                     </div>

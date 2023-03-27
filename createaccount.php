@@ -157,7 +157,7 @@ if (isset($_POST['submit']))
     ?>
     <main>
     <form id="account" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-
+<h2>Create New User</h2>
             <div class="start">
             <span class="error <?=!isset($errors['no_privilege']) ? 'hidden' : "";?>">The admin user that you are trying to create has no privilege, Please create a user with some privilege!</span>
             </div>

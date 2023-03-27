@@ -168,7 +168,7 @@ header("Location: modify");
     ?>
     <main>
 <form name="updateroom" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']?>">
-
+<h2>Update Room</h2>
         <div>
             <?php if(isset($message)) { echo $message; } ?> 
         </div>

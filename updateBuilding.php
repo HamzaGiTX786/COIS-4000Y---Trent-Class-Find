@@ -105,6 +105,8 @@ header("Location: modify");
     <main>
 
         <form name="updatebuilding" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+        
+        <h2>Update Building</h2>
 
         <div class="start">
         <a href="modify.php">Modify List</a>    

@@ -163,6 +163,7 @@ $folder = WEBROOT."www_data/img/";
     <main>
     <form name="updateEdge" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']?>">
 
+    <h2>Update Route</h2>
     <div>
         <?php if(isset($message)) { echo $message; } ?>
     </div>

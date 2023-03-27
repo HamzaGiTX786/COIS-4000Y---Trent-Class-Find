@@ -110,7 +110,7 @@ if(!mysqli_stmt_execute($stmt)){
     </div>
     
     <form name="updatenode" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-    
+    <h2>Update Node</h2>
         <div class="start">
         <a href="modify.php">Modify List</a>    
         <a href="delete.php?nodeID=<?php echo $row['ID']; ?>">Delete Node</a>
@@ -137,12 +137,14 @@ if(!mysqli_stmt_execute($stmt)){
     <input type="text" name="Building_code" class="txtField" value="<?php echo $row['Building_code']; ?>">
     </div>
 
-    <div>
+    <div class="start">
     <label for="Neighbours">Neighbours:</label>
         <?php foreach($nodes as $node):?>
-                <label for="Neighbours"><?= $node[0];?></label>
+            <div id="noderesult">
                 <input type="checkbox" name="Neighbours[]" id="Neighbours" placeholder="Enter Node Neighbours" value="<?=$node[1];?>" <?= !in_array($node[1], explode(",",json_decode($row['Neighbours']))) ? "" : "checked" ;?>>
-        <?php endforeach; ?>
+                <label for="Neighbours"><?= $node[0];?></label>
+            </div>
+                <?php endforeach; ?>
         <span class="error <?=!isset($errors['Neighbours']) ? 'hidden' : "";?>">Please enter Node Neighbours ID</span>
     </div>
 
