@@ -29,7 +29,7 @@ else{
 }
 
 foreach($check as $c){
-    if(!in_array($buildID,$c)){
+    if(in_array($buildID,$c)){
         $inbuild = true;
     }
 }

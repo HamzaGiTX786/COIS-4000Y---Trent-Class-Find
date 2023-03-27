@@ -69,26 +69,80 @@ else{
 }
 }
 else{
-$oldID = $row['RoomCode']; 
+$oldID = $_POST['oldID']; 
 $ID = $_POST['newID'] ?? null; 
 $Building_code = $_POST['Building_code'] ?? null;
 $Name = $_POST['Name'] ?? null;
 $Type= $_POST['Type'] ?? null;
 
+$tempname = array();
+$filename = array();
 
-$query = "UPDATE Room SET RoomCode=?,Building_code=?,Name=?,Type=? WHERE RoomCode=?"; //select the row of the table with the given username
+$direx = explode('/', getcwd());
+define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
+$folder = WEBROOT."www_data/img/";
+
+    for($i =0; $i<sizeof($_FILES['updateroomimage']['name']); $i++)
+        {
+            array_push($tempname, $_FILES['updateroomimage']['tmp_name'][$i]);
+            array_push($filename,$_FILES['updateroomimage']['name'][$i]);
+   
+            for($j=0;$j<sizeof($filename);$j++)
+            {
+            $exts = explode(".", $filename[$j]); // split based on period
+            $ext = $exts[count($exts)-1]; //take the last split (contents after last period)
+        
+            $filename[$j]= substr($tempname[$j], strrpos($tempname[$j], '/') + 1).".".$ext;
+            }
+   
+        }
+
+    $images = implode(",",$filename);
+
+    $q = "SELECT Image FROM Room WHERE RoomCode=?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$q))
+    {
+        echo "SQL prepare failed";
+    }
+    else{
+        if(!mysqli_stmt_bind_param($stmt,"s",$oldID)){
+            echo "bind failed"; 
+        } 
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $img = mysqli_fetch_assoc($result); // get output for the searched item
+    }
+
+   $img['Image'] = str_replace(" ",$images,$img['Image']);
+
+$query = "UPDATE Room SET RoomCode=?,Building_code=?,Name=?,Type=?,Image=? WHERE RoomCode=?"; //select the row of the table with the given username
 $stmt = mysqli_stmt_init($conn);
 
 if(!mysqli_stmt_prepare($stmt,$query))
 {
     echo "SQL prepare failed";
 }else{
-if(!mysqli_stmt_bind_param($stmt,"sssss",$ID,$Building_code,$Name,$Type,$oldID)){
+if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Building_code,$Name,$Type,$img['Image'],$oldID)){
     echo "bind failed";
 }
 if(!mysqli_stmt_execute($stmt)){
     echo "exec failed";
 }
+
+for($k = 0; $k<sizeof($tempname);$k++){
+
+    if(move_uploaded_file($tempname[$k],$folder.$filename[$k]))
+   {
+      //do nothing
+   }
+   else{
+       echo "Image upload error";
+       die();
+   }
+}
+
+header("Location: modify");
 }
 }
 ?>
@@ -113,7 +167,7 @@ if(!mysqli_stmt_execute($stmt)){
         include 'includes/nav.php';
     ?>
     <main>
-<form name="updateroom" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+<form name="updateroom" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']?>">
 
         <div>
             <?php if(isset($message)) { echo $message; } ?> 
@@ -134,7 +188,7 @@ if(!mysqli_stmt_execute($stmt)){
         <div class="start">
         <label for="Building_code">Building_code:</label>
         <select name="Building_code" id="Building_code" value="<?= $row['Building_code'];?>" required>
-            <option value="<?=$row['Building_code']?>;"><?php foreach($buildings as $build){if(in_array($row['Building_code'],$build)){ echo $build[1];}}?></option>
+            <option value="<?=$row['Building_code']?>"><?php foreach($buildings as $build){if(in_array($row['Building_code'],$build)){ echo $build[1];}}?></option>
             <?php foreach($buildings as $build): ?>
             <option value="<?=$build[0]?>"><?=$build[1]?></option>
         <?php endforeach; ?>
@@ -150,7 +204,7 @@ if(!mysqli_stmt_execute($stmt)){
 
         <div class="start">
         <label for="Type">Type:</label>
-        <select name="Room_Type" id="Room_Type">
+        <select name="Type" id="Type">
             <option value="<?= $row['Type']?>"><?php switch($row['Type']){case "Seminar": echo "Seminar Room"; break; case "Lecture": echo "Lecture Hall"; break; case "Study": echo "Individual Study Room"; break; case "Group": echo "Group Study Room"; break; case "Commons": echo "College Commons"; break;} ?></option>
             <option value="Seminar">Seminar Room</option>
             <option value="Lecture">Lecture Hall</option>

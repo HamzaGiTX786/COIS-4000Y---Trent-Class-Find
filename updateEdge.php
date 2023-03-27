@@ -74,8 +74,6 @@ $direx = explode('/', getcwd());
 define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
 $folder = WEBROOT."www_data/img/";
 
-if(isset($_POST['submit'])){
-
     for($i =0; $i<sizeof($_FILES['updateimage']['name']); $i++)
         {
             array_push($tempname, $_FILES['updateimage']['tmp_name'][$i]);
@@ -140,7 +138,6 @@ if(isset($_POST['submit'])){
     header("Location: modify");
     }
 
-}
 }
 ?>
 

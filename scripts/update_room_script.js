@@ -102,8 +102,8 @@ window.addEventListener("DOMContentLoaded", () => {
             xhttp.send();
     
             //make a label and input for the new image to be uploaded to the same div as the yes and no buttons
-            yes_delete.parentNode.insertAdjacentHTML("beforeend","<label id='updateimage' for='updateimage'>Upload new image:</label>"); 
-            yes_delete.parentNode.insertAdjacentHTML("beforeend","<input type='file' id='updateimage' name='updateimage[]' multiple>");
+            yes_delete.parentNode.insertAdjacentHTML("beforeend","<label id='updateroomimage' for='updateroomimage'>Upload new image:</label>"); 
+            yes_delete.parentNode.insertAdjacentHTML("beforeend","<input type='file' id='updateroomimage' name='updateroomimage[]' multiple>");
     
             //remove the yes and no buttons
             yes_delete.remove();

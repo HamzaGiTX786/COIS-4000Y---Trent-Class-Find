@@ -16,7 +16,7 @@ if(strstr($roomID,"SELECT") || strstr($roomID, "UPDATE") || strstr($roomID,"DELE
     die();
 }
 
-$q = "SELECT ID FROM Room";
+$q = "SELECT RoomCode FROM Room";
 $stmt = mysqli_stmt_init($conn);
 if(!mysqli_stmt_prepare($stmt,$q))
 {
@@ -29,7 +29,7 @@ else{
 }
 
 foreach($check as $c){
-    if(!in_array($roomID,$c)){
+    if(in_array($roomID,$c)){
         $inroom = true;
     }
 }
