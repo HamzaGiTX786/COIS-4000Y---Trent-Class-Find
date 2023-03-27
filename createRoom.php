@@ -128,9 +128,10 @@ if (isset($_POST['submit']))
     
     <main>
         
-    <h2>Create Room</h2>
+   
     <form id="create" name="create" method="post" enctype="multipart/form-data" novalidate>
-                   
+    <h2>Create Room</h2>
+    <div id="createroom">
                     <div>
                         <label for="Building_Name">Building Name</label>
                         <select name="Building_Name" id="Building_Name">
@@ -172,7 +173,7 @@ if (isset($_POST['submit']))
                         <input type="file" id="roomimage" name="roomimage[]" multiple>
                          <span class="error <?=!isset($errors['roomimage']) ? 'hidden' : "";?>">Please Upload Images</span>
                     </div>
-
+            </div>
                     <div id="buttons">    
                     <button type="submit" name="submit">Create Room</button>
                     </div>

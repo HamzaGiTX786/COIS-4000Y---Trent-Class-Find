@@ -103,24 +103,26 @@ if (isset($_POST['submit']))
     ?>
     
     <main>
-        <h2>Create Node</h2>
-    <form id="create" name="create" method="post" novalidate>  
-                    <div>
+    
+    <form id="create" name="create" method="post" novalidate> 
+    <h2>Create Node</h2>
+   
+                    <div class="start">
                         <label for="ID">ID</label>
                         <input type="text" name="ID" id="ID" placeholder="Enter Node ID" value="" required />
                          <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please enter Node ID</span>
                     </div>
-                    <div>
+                    <div class="start">
                         <label for="Location">Location</label>
                         <input type="text" name="Location" id="Location" placeholder="Enter Node Location" value="" required />
                          <span class="error <?=!isset($errors['Location']) ? 'hidden' : "";?>">Please enter Node Location</span>
                     </div>
-                    <div>
+                    <div class="start">
                         <label for="Name">Name</label>
                         <input type="text" name="Name" id="Name" placeholder="Enter Node Name" value="" required />
                          <span class="error <?=!isset($errors['Name']) ? 'hidden' : "";?>">Please enter Node Name</span>
                     </div>
-                    <div>
+                    <div class="start">
                     <label for="building">Building</label>
                         <select name="building" id="building" value="" required>
                             <option value="">Pick a Building where the node belongs</option>
@@ -129,11 +131,13 @@ if (isset($_POST['submit']))
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div>
+                    <div class="start">
                         <label for="Neighbours">Neighbours:</label>
                         <?php foreach($nodes as $node):?>
-                            <label for="Neighbours"><?= $node[0];?></label>
+                            <div id="noderesults">
                             <input type="checkbox" name="Neighbours[]" id="Neighbours" placeholder="Enter Node Neighbours" value="<?=$node[1];?>">
+                            <label for="Neighbours"><?= $node[0];?></label>
+                            </div>
                         <?php endforeach; ?>
                          <span class="error <?=!isset($errors['Neighbours']) ? 'hidden' : "";?>">Please enter Node Neighbours ID</span>
                     </div>

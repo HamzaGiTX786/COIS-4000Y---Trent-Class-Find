@@ -70,25 +70,25 @@ if (isset($_POST['submit']))
     ?>
     
     <main>
-    <h2>Create Building</h2>
     <form id="create" name="create" method="post" novalidate>
-                    
-                    <div>
+    <h2>Create Building</h2>
+        
+                    <div class="start">
                         <label for="code">Code</label>
                         <input type="text" name="code" id="code" placeholder="Enter building code" value="" required />
                          <span class="error <?=!isset($errors['code']) ? 'hidden' : "";?>">Please enter building code</span>
                     </div>
-                    <div>
+                    <div class="start">
                         <label for="name">Name</label>
                         <input type="text" name="name" id="name" placeholder="Enter Building Name" value="" required />
                          <span class="error <?=!isset($errors['name']) ? 'hidden' : "";?>">Please enter End Node</span>
                     </div>
-                    <div>
+                    <div class="start">
                         <label for="NumRooms">Number of Rooms</label>
                         <input type="text" name="NumRooms" id="NumRooms" placeholder="Enter Number of Rooms" value="" required />
                          <span class="error <?=!isset($errors['NumRooms']) ? 'hidden' : "";?>">Please enter Number of Rooms</span>
                     </div>
-                    <div>
+                    <div class="start">
                         <label for="geo">Geo-location</label>
                         <input type="text" id="geo" name="geo">
                          <span class="error <?=!isset($errors['geo']) ? 'hidden' : "";?>">Please enter Geo-location</span>
