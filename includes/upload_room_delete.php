@@ -28,7 +28,7 @@ if(!unlink($folder.$del))
 }
 
 
-$query = "UPDATE Edge SET Image=? WHERE ID=?"; //select the row of the table with the given username
+$query = "UPDATE Room SET Image=? WHERE RoomCode=?"; //select the row of the table with the given username
 $stmt = mysqli_stmt_init($conn);
 
 if(!mysqli_stmt_prepare($stmt,$query))

@@ -118,7 +118,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 		<td><?php echo $row[2]; ?></td>
 		<td><?php echo $row[3]; ?></td>
 		<td><?php echo $row[4]; ?></td>
-		<td><a href="updateRoom.php?ID=<?php echo $row[0]; ?>">Update</a></td>
+		<td><a href="updateRoom.php?Room_Code=<?php echo $row[0]; ?>">Update</a></td>
 
       </tr>
 
