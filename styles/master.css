@@ -5,13 +5,13 @@ html{
 }
 
 body{
-    background-color: #fff;
+    background-color: #444;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     flex-grow: 1;
     min-height: 100%;
-    font-family:"museo-sans";
+    font-family:"museo-sans","Arial";
 }
  
 header{
@@ -103,9 +103,17 @@ i{
     align-self:stretch;
 }
 
-.buttons{
+button{
     border: .2em double #000;
+    background-color: rgb(21, 71, 52);
+    color: white;
     margin: .5em;
+    padding: .5em;
+    min-width: 20em;
+}
+
+button a{
+    color: white;
 }
 
 button:hover{
@@ -136,6 +144,10 @@ button:hover{
     align-items: center;
 }
 
+ul li, ol li{
+    padding:.2em
+}
+
 .wrapper{
     display: flex;
     flex-direction: column;
@@ -145,6 +157,39 @@ button:hover{
     background-color: #B15533;
     padding-bottom: .5em;
     margin: 1em;
+    border: .5em solid #fff;
+    border-radius: 0.1em;
+    color: #fff;
+}
+
+.wrapper li a, .wrapper li i{
+color: #fff;
+text-shadow: 0.1em 0px 1px #333;
+padding: 0.2em;
+}
+
+.wrapper h2{
+    padding: 0.5em;
+}
+
+table,th,td{
+    border: 2px solid #fff;
+    padding: 0.2em;
+}
+
+th{
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+}
+
+tr{
+    padding: 1em;
+}
+
+table a, table a:hover{
+    color: #fff;
+    cursor: pointer;
 }
 
 ul,p{
@@ -154,10 +199,6 @@ ul,p{
 
 section.links ul li{
     padding:.4em
-}
-
-ul li{
-    padding:.2em
 }
 
 #foot{
@@ -198,12 +239,12 @@ section i{
 }
 
 nav{
-    justify-content: flex-start;
-    background-color: #444;
-    width: 10em;
+    justify-content: center;
+    background-color:#B15533;
+    width: max-content;
     padding: 0;
     min-height: 100%;
-    font-family: "museo-sans";
+    font-family: "museo-sans","Arial";
 }
 
 nav a{
@@ -229,6 +270,9 @@ nav li{
     font-family: "museo-sans";
 }
 
+.fa-solid.fa-trash:hover{
+cursor: pointer;
+}
 
 .hidden{
     display: none;

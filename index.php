@@ -5,7 +5,7 @@ include 'includes/library.php';
 
 
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,20 +25,22 @@ include 'includes/library.php';
         include 'includes/nav.php';
     ?>
     <main>
-    <form id="login" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
-            <div class="start">
-                <label for="startpoint">Enter Start Point:</label>
-                <input type="text" name="startpoint" id="startpoint" placeholder="Enter a start point" value=""/>
-            </div>
-            <div class="end">
-                <label for="endpoint">Enter End Point:</label>
-                <input type="text" name="endpoint" id="endpoint" placeholder="Enter an end point" value="" required/> 
-            </div>
+    
+    <div class="wrapper">
+    <h2>How to use Trent ClassFind: </h2>
+    <ol>
+        <li>1. Click on Pick A Room on the side navigation panel.</li>
+        <li>2. Select the building you are starting from.</li>
+        <li>3. Select the room/entrance of the building you are starting from</li>
+        <li>4. Select the building you are trying to reach.</li>
+        <li>5. Select the room/entrance of the building you are trying to find.</li>
+        <li>6. Click Search.</li>
+        <li>7. Follow the provided route to your destination!</li>
+    </ol>
 
-            <div class="buttons">
-                <button type="submit" name="submit" id="submit">Search</button>
-            </div>
-    </form>
+    <div class="buttons">
+        <button><a href="pickaroom.php">Go To Pick a Room</a></button></div>
+    </div>
     </main>
 </div>
 <?php

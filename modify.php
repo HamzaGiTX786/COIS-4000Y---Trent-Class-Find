@@ -68,15 +68,17 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
         include 'includes/nav.php';
     ?>
 	<main>
-		<form >
+		<div class="wrapper">
+			<h2>Modify & Delete</h2>
+			<h2>Nodes</h2>
 	<div>
-	<h2>Nodes</h2>
 		<?php if (sizeof($Node) > 0) :?>
 		<table>
 			<tr>
 				<th>ID</th>
 				<th>Location</th>
 				<th>Name</th>
+				<th>Building</th>
 				<th>Neighbours</th>
 				<th>Action</th>
 			</tr>
@@ -97,8 +99,8 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 	<?php endif; ?>
 	</div>
 
-	<div>
 	<h2>Room</h2>
+	<div>
 <?php if (sizeof($Rooms) > 0) :?>
 <table>
 	  <tr>
@@ -108,7 +110,6 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 		<th>Type</th>
 		<th>Image</th>
         <th>Action</th>
-		
 	  </tr>
 			
 	<?php foreach($Rooms as $row) :?>
@@ -131,16 +132,17 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 
 </div>
 
+<h2>Building</h2>
+
 <div>
-	<h2>Building</h2>
 	<?php  if (sizeof($Buildings) > 0) :?>
 	<table>
 		<tr>
-			<th>Code</td>
-			<td>Name</td>
-			<td>Number of Rooms</td>
-			<td>Geo-location</td>
-			<td>Action</td>
+			<th>Code</th>
+			<th>Name</th>
+			<th>Number of Rooms</th>
+			<th>Geo-location</th>
+			<th>Action</th>
 		</tr>
 
 			<?php foreach($Buildings as $row):?>
@@ -159,8 +161,9 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 	<?php endif; ?>
 </div>
 
-<div>
 <h2>Route</h2>
+
+<div>
 <?php if (sizeof($Edges) > 0) : ?>
 
 <table>
@@ -183,13 +186,14 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
 		<td><?php echo $row[4]; ?></td>
 		<td><?php echo $row[5]; ?></td>
 		<td><a href="updateEdge.php?start_node=<?= $row[1]; ?>&end_node=<?= $row[2]; ?>">Update</a></td>
+	  </tr>
 			<?php endforeach; ?>
 </table>
  <?php else: ?>
    No result found for building
 <?php endif; ?>
 </div>
-</form>
+</div>
 </main>
 	</div>
     <footer>
