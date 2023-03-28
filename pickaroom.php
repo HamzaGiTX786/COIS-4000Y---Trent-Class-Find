@@ -121,7 +121,7 @@ if(isset($_POST['submit'])){
     <form id="search" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
             <h2>Pick a building for the start point then pick a room below, and repeat the same for the end point</h2>
             <div class="buildingselector">
-            <div class="start">
+            <div class="start seprate">
                 <select name="startpoint" id="startpoint" value="<?= $_POST['startpoint'] ?>">
                     <option value="">Pick a Building for the Start point</option>
                  <?php foreach($names as $build_info): ?>
@@ -161,7 +161,8 @@ if(isset($_POST['submit'])){
             </div>
     </form>
 
-    <div class=" route <?=!isset($show['route']) ? 'hidden' : "" ;?>">
+    <div class=" wrapper route <?=!isset($show['route']) ? 'hidden' : "" ;?>">
+    <h2>Route</h2>
         <ol>
             <?php foreach($imgs as $img):?>
             <li>

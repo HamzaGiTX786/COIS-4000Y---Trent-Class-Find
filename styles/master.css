@@ -68,34 +68,28 @@ form{
     padding: 0.1em;
 }
 
-#createroom{
-    display: flex;
-}
-
-#createroom div{
-    padding: 0.3em;
-}
-
-#createbuilding{
-    display: flex;
-}
-
-#createbuilding div{
-    padding: 0.3em;
-}
-
 li{
     list-style: none;
 }
 
 i{
-    padding-right: 1em;
+    padding: .2em;
 }
 
 .start,.end,.submit{
     padding: .5em;
     color: white;
     text-shadow: 0.1em 0px 1px #333;
+    margin: .2em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self:stretch;
+}
+
+select{
+    padding: .5em;
+    color: #000;
     margin: .2em;
     display: flex;
     justify-content: center;
@@ -110,6 +104,8 @@ button{
     margin: .5em;
     padding: .5em;
     min-width: 20em;
+    font-weight: 600;
+    font-size: large;
 }
 
 button a{
@@ -118,6 +114,11 @@ button a{
 
 button:hover{
     cursor:pointer;
+}
+
+.seprate{
+    border-right: .25em solid #fff;
+    padding-right: 2em;
 }
 
 .startnend input,.buildingselector select,form input{
@@ -284,4 +285,8 @@ cursor: pointer;
 
 a{
     text-decoration: none;
+}
+
+.route li{
+    padding: 1em;
 }
