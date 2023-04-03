@@ -243,6 +243,22 @@ if(delete_images != null){
   }); // end of foreach
 }
 
+//--------------------------------------------------------------------------------------------------------------------
+
+var addimages = document.getElementsByClassName("fa-solid fa-square-plus");
+
+if(addimages){
+
+addimages[0].addEventListener("click",()=>{
+
+    addimages[0].parentNode.insertAdjacentHTML("beforeend","<label id='updateimage' for='updateimage'>Upload new image:</label>"); 
+    addimages[0].parentNode.insertAdjacentHTML("beforeend","<input type='file' id='updateimage' name='updateimage[]' multiple>");
+
+    addimages[0].setAttribute("class","hidden");
+});
+
+}
+
           
           
 });

@@ -126,9 +126,9 @@ for($k = 0; $k<sizeof($tempname);$k++){
 
     <main>
 
-    <h2>Create Route</h2>
+  
     <form id="create" name="create" method="post"  enctype="multipart/form-data" novalidate>
-
+    <h2>Create Route</h2>
                     <div class="start">
                         <label for="Start_Node">Start Node</label>
                         <select name="Start_Node" id="Start_Node" required>

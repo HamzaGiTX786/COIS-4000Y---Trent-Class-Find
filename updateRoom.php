@@ -218,7 +218,8 @@ header("Location: modify");
             <label for="room_images">Image(s)</label>
             <?php $images = explode(",", $row['Image']);?>
         <ol>
-         <?php foreach($images as $i): ?> 
+         <?php foreach($images as $i):    
+             if($i != " "):?> 
             <li>
                 <div>
                     <?= $i;?>
@@ -227,7 +228,14 @@ header("Location: modify");
                     <i class="fa-solid fa-trash"></i>
                 </div>
             </li>
-        <?php endforeach; ?>
+            <?php else: ?>
+                <li>
+                    <div id="add">
+                    <i class="fa-solid fa-square-plus"></i>
+                    </div>
+                </li>
+            <?php endif;
+                endforeach; ?>
         </ol>
     </div>
 

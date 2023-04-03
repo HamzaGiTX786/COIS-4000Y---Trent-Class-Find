@@ -271,7 +271,7 @@ nav li{
     font-family: "museo-sans";
 }
 
-.fa-solid.fa-trash:hover{
+.fa-solid.fa-trash:hover,.fa-solid.fa-square-plus:hover{
 cursor: pointer;
 }
 

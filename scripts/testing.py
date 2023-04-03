@@ -8,7 +8,7 @@ import time
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 
-def checkerror():
+def checkerror_pickaroom():
 
     driver.get("https://loki.trentu.ca/~classfind/4000/pickaroom.php")
 
@@ -27,15 +27,15 @@ def checkerror():
 
 #----------------------------------------------------------------------------------------------------------------
 
-def sqlcheck():
+def sqlcheck(page,id):
 
-    driver.get("https://loki.trentu.ca/~classfind/4000/updateRoom.php?Room_Code= SELECT * FROM Users;")
+    driver.get(f"https://loki.trentu.ca/~classfind/4000/{page}?{id}= SELECT * FROM Users;")
+
+    check = driver.find_element("tag name","h2").text
+
     time.sleep(2)
 
-    check = driver.find_element("class name","wrapper")
-
-    time.sleep(2)
-    if check:
+    if check == "Modify & Delete":
         print("Test Passed")
     else:
         print("Test Failed")
@@ -44,9 +44,15 @@ def sqlcheck():
 
 #-----------------------------------------------------------------------------------------------------
 
+def 
 
-checkerror()
-sqlcheck()
+
+#checkerror_pickaroom()
+#sqlcheck("updateEdge","Room_Code")
+#sqlcheck("updateRoom","Room_Code")
+#sqlcheck("update","ID")
+sqlcheck("updateBuilding","ID")
+
 
 
 

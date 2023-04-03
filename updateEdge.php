@@ -207,7 +207,8 @@ $folder = WEBROOT."www_data/img/";
         <label for="image">Images:</label>
         <?php $images = explode(",", $row['Image']);?>
         <ol>
-         <?php foreach($images as $i): ?> 
+         <?php foreach($images as $i): 
+                if($i != " "):?> 
             <li>
                 <div>
                     <?= $i;?>
@@ -216,7 +217,14 @@ $folder = WEBROOT."www_data/img/";
                     <i class="fa-solid fa-trash"></i>
                 </div>
             </li>
-        <?php endforeach; ?>
+            <?php else: ?>
+                <li>
+                    <div id="add">
+                    <i class="fa-solid fa-square-plus"></i>
+                    </div>
+                </li>
+                <?php endif;
+                  endforeach; ?>
         </ol>
     </div>
 

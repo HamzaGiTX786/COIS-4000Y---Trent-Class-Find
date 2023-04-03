@@ -1,6 +1,8 @@
 <?php
 include 'includes/library.php';
 
+if(!isset($_POST['submit'])){
+
 if(!isset($_GET['ID'])){
     header("Location: modify");
     die();
@@ -13,6 +15,18 @@ if(strstr($node_code,"SELECT") || strstr($node_code, "UPDATE") || strstr($node_c
 {
     header("Location: modify");
     die();
+}
+
+$query= "SELECT Code,Name FROM Buildings";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt,$query))
+{
+    echo "SQL prepare failed";
+}
+else{
+    mysqli_stmt_execute($stmt);
+    $result_build = mysqli_stmt_get_result($stmt);
+    $buildings = mysqli_fetch_all($result_build); // get output for the searched item
 }
 
 $q = "SELECT Name,ID FROM Node ORDER BY Name ASC";
@@ -52,18 +66,15 @@ else{
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($result); // get output for the searched item
-}
+}}
+else{
 
-
-$oldID = $row['ID']; 
-$ID = $_POST['newID'] ?? null; 
-$Location = $_POST['Location'] ?? null;
-$Name=$_POST['Name'] ?? null;
-$Building_code=$_POST['Building_code'] ?? null;
-$Neighbours=$_POST['Neighbours'] ?? null;
-
-
-if(isset($_POST['submit'])){
+    $oldID = $_POST['oldID']; 
+    $ID = $_POST['newID'] ?? null; 
+    $Location = $_POST['Location'] ?? null;
+    $Name=$_POST['Name'] ?? null;
+    $Building_code=$_POST['Building_code'] ?? null;
+    $Neighbours=$_POST['Neighbours'] ?? null;
 
     $NeighbourNodes = implode(",",$Neighbours);
     $json=json_encode($NeighbourNodes); 
@@ -80,6 +91,8 @@ if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Location,$Name,$Building_code,$js
 }
 if(!mysqli_stmt_execute($stmt)){
     echo "exec failed";
+}else{
+    header("Location: modify");
 }
 }
 }
@@ -118,7 +131,7 @@ if(!mysqli_stmt_execute($stmt)){
 
     <div class="start">
     <label for="newID">ID:</label>
-    <input type="hidden" name="newID" class="txtField" value="<?php echo $row['ID']; ?>">
+    <input type="hidden" name="oldID" class="hidden" value="<?php echo $row['ID']; ?>">
     <input type="text" name="newID"  value="<?php echo $row['ID']; ?>"> 
     </div>
 
@@ -133,9 +146,14 @@ if(!mysqli_stmt_execute($stmt)){
     </div>
 
     <div class="start">
-    <label for="Building_code">Building code:</label>
-    <input type="text" name="Building_code" class="txtField" value="<?php echo $row['Building_code']; ?>">
-    </div>
+        <label for="Building_code">Building_code:</label>
+        <select name="Building_code" id="Building_code" value="<?= $row['Building_code'];?>" required>
+            <option value="<?=$row['Building_code']?>"><?php foreach($buildings as $build){if(in_array($row['Building_code'],$build)){ echo $build[1];}}?></option>
+            <?php foreach($buildings as $build): ?>
+            <option value="<?=$build[0]?>"><?=$build[1]?></option>
+        <?php endforeach; ?>
+        </select>
+        </div>
 
     <div class="start">
     <label for="Neighbours">Neighbours:</label>
