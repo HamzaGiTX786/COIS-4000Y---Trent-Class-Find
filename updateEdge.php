@@ -170,7 +170,7 @@ $folder = WEBROOT."www_data/img/";
 
     <div class="start">
     <a href="modify.php">Modify List</a>    
-    <a href="deleteEdge.php?userid=<?php echo $row['ID'] ?>">Delete</a>
+    <a href="deleteEdge.php?ID=<?php echo $row['ID'] ?>">Delete</a>
     </div>
 
     <div class="start">
