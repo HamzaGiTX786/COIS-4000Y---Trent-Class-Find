@@ -21,9 +21,9 @@ def checkerror_pickaroom():
     driver.find_element("name", "submit").click()
 
     if driver.find_element("class name","error"):
-        print("Test Passed")
+        return "Test Passed"
     else:
-        print("Test Failed")
+        return "Test Failed"
 
 #----------------------------------------------------------------------------------------------------------------
 
@@ -34,9 +34,9 @@ def sqlcheck(page,id):
     check = driver.find_element("tag name","h2").text
 
     if check == "Modify & Delete":
-        print("Test Passed")
+        return "Test Passed"
     else:
-        print("Test Failed")
+        return "Test Failed"
 
 
 #-----------------------------------------------------------------------------------------------------
@@ -54,11 +54,12 @@ def pageswithoutget(page):
 
 
 #checkerror_pickaroom()
-#sqlcheck("updateEdge","Room_Code")
-#sqlcheck("updateRoom","Room_Code")
-#sqlcheck("update","ID")
-#sqlcheck("updateBuilding","ID")
-#pageswithoutget("update.php")
+print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
+print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
+print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
+print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
+
+print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
 print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
 print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
 print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
