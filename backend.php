@@ -20,7 +20,7 @@ exit();
     <link rel="stylesheet" href="styles/master.css"/>
     <script src="https://kit.fontawesome.com/e156dbae2b.js" crossorigin="anonymous"></script>
 
-    <title>Admin Backend:Trent Class Find</title>
+    <title>Admin Backend:Trent Class Find - Backend</title>
 </head>
 <body>
     <a href="index.html"><?php

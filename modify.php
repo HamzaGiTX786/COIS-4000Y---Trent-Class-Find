@@ -57,7 +57,7 @@ $Edges = mysqli_fetch_all($result_edge); // get output for the searched item
     <link rel="stylesheet" href="styles/master.css"/>
     <script src="https://kit.fontawesome.com/e156dbae2b.js" crossorigin="anonymous"></script>
 
-    <title>Admin Backend:Trent Class Find</title>
+    <title>Admin Backend:Trent Class Find - Modify</title>
 </head>
 <body>
 <a href="index.php"><?php
