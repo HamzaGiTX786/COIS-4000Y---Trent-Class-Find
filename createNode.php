@@ -50,6 +50,7 @@ $building_code= $_POST['building'] ?? null;
     {
         $errors['ID'] = true;
     }
+
     if (!isset($Location) || strlen($Location) === 0) 
     {
         $errors['Location'] = true;

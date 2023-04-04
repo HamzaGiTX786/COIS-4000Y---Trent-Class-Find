@@ -37,8 +37,29 @@ if (isset($_POST['submit']))
     }
     if (!isset($RoomCode) || strlen($RoomCode) === 0) 
     {
-        $errors['Room_Type'] = true;
+        $errors['Room_Code'] = true;
+    }else{
+
+        $qnode = "SELECT RoomCode FROM Room WHERE RoomCode=?";
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$qnode))
+        {
+        echo "SQL prepare failed";
+        }
+        else{
+        if(!mysqli_stmt_bind_param($stmt,"s",$RoomCode)){
+                echo "bind failed"; 
+            } 
+        mysqli_stmt_execute($stmt);
+        $result_node = mysqli_stmt_get_result($stmt);
+        $n = mysqli_fetch_assoc($result_node); // get output for the searched item
+        }
+    
+        if($n){
+            $errors['sameID'] = true;
+        }
     }
+
     if(sizeof($_FILES) <= 0){
         $errors['image'] = true;
     }
@@ -146,7 +167,8 @@ if (isset($_POST['submit']))
                     <div class="start">
                         <label for="Room_Code">Room Code</label>
                         <input type="text" name="Room_Code" id="Room_Code" placeholder="Enter the room code" value="" required/>
-                        <span class="error <?=!isset($errors['Room_Name']) ? 'hidden' : "";?>">Please enter Room Code</span>
+                        <span class="error <?=!isset($errors['Room_Code']) ? 'hidden' : "";?>">Please enter Room Code</span>
+                        <span class="error <?=!isset($errors['sameID']) ? 'hidden' : "";?>">There exist a room with the same code, please enter another code for the room</span>
                     </div>
                     
                     <div class="start">

@@ -1,6 +1,8 @@
 <?php
 include 'includes/library.php';
 
+if(!isset($_POST['submit'])){
+
 $q = "SELECT Name,ID FROM Node ORDER BY Name ASC";
 $stmt = mysqli_stmt_init($conn);
 if(!mysqli_stmt_prepare($stmt,$q))
@@ -12,9 +14,24 @@ else{
     $result = mysqli_stmt_get_result($stmt);
     $nodes = mysqli_fetch_all($result); // get output for the searched item
 }
+}
+else{
 
+    $q = "SELECT Name,ID FROM Node ORDER BY Name ASC";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$q))
+    {
+        echo "SQL prepare failed";
+    }
+    else{
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $nodes = mysqli_fetch_all($result); // get output for the searched item
+    }
 
 $errors = array(); //declare empty array to add errors too
+
+
 $Start_Node = $_POST['Start_Node'] ?? null;
 $End_Node = $_POST['End_Node'] ?? null;
 $Description= $_POST['Description'] ?? null;
@@ -27,28 +44,52 @@ $direx = explode('/', getcwd());
 define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
 $folder = WEBROOT."www_data/img/";
 
-if (isset($_POST['submit']))
-{
 
     if (!isset($Start_Node) || strlen($Start_Node) === 0)
     {
         $errors['Start_Node'] = true;
     }
-    if (!isset($End_Node) || strlen($End_Node) === 0)
+    else if (!isset($End_Node) || strlen($End_Node) === 0)
     {
         $errors['End_Node'] = true;
     }
-    if($End_Node == $Start_Node)
+    else if($End_Node == $Start_Node)
     {
         $errors['same'] = true;
     }
-    if (!isset($Distance) || strlen($Distance) === 0)
+    else {
+        $qnode = "SELECT ID FROM Edge WHERE Start_Node=? AND End_Node=?";
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$qnode))
+        {
+        echo "SQL prepare failed";
+        }
+        else{
+        if(!mysqli_stmt_bind_param($stmt,"ss",$Start_Node,$End_Node)){
+                echo "bind failed"; 
+            } 
+        mysqli_stmt_execute($stmt);
+        $result_node = mysqli_stmt_get_result($stmt);
+        $n = mysqli_fetch_assoc($result_node); // get output for the searched item
+        }
+    
+        if($n){
+            $errors['sameID'] = true;
+        }
+    }
+
+    if (!isset($Distance) || strlen($Distance) === 0 || $Distance < 0)
     {
         $errors['Distance'] = true;
     }
+
     if (!isset($Description) || strlen($Description) === 0)
     {
         $errors['Description'] = true;
+    }
+
+    if(sizeof($_FILES['image']) < 0){
+        $errors['image'] = true;
     }
 
 
@@ -129,6 +170,7 @@ for($k = 0; $k<sizeof($tempname);$k++){
   
     <form id="create" name="create" method="post"  enctype="multipart/form-data" novalidate>
     <h2>Create Route</h2>
+
                     <div class="start">
                         <label for="Start_Node">Start Node</label>
                         <select name="Start_Node" id="Start_Node" required>
@@ -138,18 +180,22 @@ for($k = 0; $k<sizeof($tempname);$k++){
                             <?php endforeach; ?>
                         </select>
                          <span class="error <?=!isset($errors['Start_Node']) ? 'hidden' : "";?>">Please enter Start Node</span>
+                         <span class="error <?=!isset($errors['sameID']) ? 'hidden' : "";?>">There exist a route with the start and end points, please enter another starting point or ending point to create a route</span>
                     </div>
+
                     <div class="end">
                         <label for="End_Node">End Node</label>
                         <select name="End_Node" id="End_Node" required>
                         <option value="">Select a Node as the end point</option>
                         </select>
                          <span class="error <?=!isset($errors['End_Node']) ? 'hidden' : "";?>">Please enter End Node</span> 
+                         <span class="error <?=!isset($errors['sameID']) ? 'hidden' : "";?>">There exist a route with the start and end points, please enter another starting point or ending point to create a route</span>
                     </div>
+
                     <div class="start">
                         <label for="Distance">Distance</label>
                         <input type="number" min="0" name="Distance" id="Distance" placeholder="Enter Nodes Distance" value="" required />
-                         <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter Nodes Distance</span>
+                         <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter Distance between the 2 nodes</span>
                     </div>
 
                     <div class="start">
