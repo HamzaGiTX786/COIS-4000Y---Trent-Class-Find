@@ -69,6 +69,7 @@ else{
 }
 }
 else{
+    $errors  = array();
 $oldID = $_POST['oldID']; 
 $ID = $_POST['newID'] ?? null; 
 $Building_code = $_POST['Building_code'] ?? null;

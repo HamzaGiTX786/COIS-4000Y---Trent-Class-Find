@@ -58,7 +58,7 @@ else{
 }
 }
 else{
-
+    $errors  = array();
 $oldID = $_POST['oldID'];
 $ID = $_POST['newID'] ?? null; 
 $Start_Node = $_POST['Start_Node'] ?? null;

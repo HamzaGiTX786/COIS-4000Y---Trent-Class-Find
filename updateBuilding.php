@@ -57,7 +57,7 @@ else{
 }
 }
 else{
-
+$errors  = array();
 $oldID = $row['Code']; 
 $ID = $_POST['new_code'] ?? null; 
 $Name = $_POST['Name'] ?? null;
