@@ -101,74 +101,95 @@ if (!isset($Type) || strlen($Type) === 0) // make sure a username was entered
     $errors['Type'] = true;
 }
 
-$tempname = array();
-$filename = array();
+if(isset($_FILES["updateroomimage"]) && count($errors) === 0 ){
 
-$direx = explode('/', getcwd());
-define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
-$folder = WEBROOT."www_data/img/";
+        $tempname = array();
+        $filename = array();
 
-    for($i =0; $i<sizeof($_FILES['updateroomimage']['name']); $i++)
-        {
-            array_push($tempname, $_FILES['updateroomimage']['tmp_name'][$i]);
-            array_push($filename,$_FILES['updateroomimage']['name'][$i]);
-   
-            for($j=0;$j<sizeof($filename);$j++)
-            {
-            $exts = explode(".", $filename[$j]); // split based on period
-            $ext = $exts[count($exts)-1]; //take the last split (contents after last period)
+        $direx = explode('/', getcwd());
+        define('WEBROOT', "/$direx[1]/$direx[2]/$direx[3]/"); //home/username/public_html
+        $folder = WEBROOT."www_data/img/";
+
+            for($i =0; $i<sizeof($_FILES['updateroomimage']['name']); $i++)
+                {
+                    array_push($tempname, $_FILES['updateroomimage']['tmp_name'][$i]);
+                    array_push($filename,$_FILES['updateroomimage']['name'][$i]);
         
-            $filename[$j]= substr($tempname[$j], strrpos($tempname[$j], '/') + 1).".".$ext;
+                    for($j=0;$j<sizeof($filename);$j++)
+                    {
+                    $exts = explode(".", $filename[$j]); // split based on period
+                    $ext = $exts[count($exts)-1]; //take the last split (contents after last period)
+                
+                    $filename[$j]= substr($tempname[$j], strrpos($tempname[$j], '/') + 1).".".$ext;
+                    }
+        
+                }
+
+            $images = implode(",",$filename);
+
+            $q = "SELECT Image FROM Room WHERE RoomCode=?";
+            $stmt = mysqli_stmt_init($conn);
+            if(!mysqli_stmt_prepare($stmt,$q))
+            {
+                echo "SQL prepare failed";
             }
-   
+            else{
+                if(!mysqli_stmt_bind_param($stmt,"s",$oldID)){
+                    echo "bind failed"; 
+                } 
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $img = mysqli_fetch_assoc($result); // get output for the searched item
+            }
+
+        $img['Image'] = str_replace(" ",$images,$img['Image']);
+
+        $query = "UPDATE Room SET RoomCode=?,Building_code=?,Name=?,Type=?,Image=? WHERE RoomCode=?"; //select the row of the table with the given username
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$query))
+        {
+            echo "SQL prepare failed";
+        }else{
+        if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Building_code,$Name,$Type,$img['Image'],$oldID)){
+            echo "bind failed";
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            echo "exec failed";
         }
 
-    $images = implode(",",$filename);
+        for($k = 0; $k<sizeof($tempname);$k++){
 
-    $q = "SELECT Image FROM Room WHERE RoomCode=?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$q))
-    {
-        echo "SQL prepare failed";
-    }
-    else{
-        if(!mysqli_stmt_bind_param($stmt,"s",$oldID)){
-            echo "bind failed"; 
-        } 
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $img = mysqli_fetch_assoc($result); // get output for the searched item
-    }
+            if(move_uploaded_file($tempname[$k],$folder.$filename[$k]))
+        {
+            //do nothing
+        }
+        else{
+            echo "Image upload error";
+            die();
+        }
+        }
 
-   $img['Image'] = str_replace(" ",$images,$img['Image']);
+        header("Location: modify");
+        }
+        }
 
-$query = "UPDATE Room SET RoomCode=?,Building_code=?,Name=?,Type=?,Image=? WHERE RoomCode=?"; //select the row of the table with the given username
-$stmt = mysqli_stmt_init($conn);
+else if(count($errors) === 0){
+        $query = "UPDATE Room SET RoomCode=?,Building_code=?,Name=?,Type=? WHERE RoomCode=?"; //select the row of the table with the given username
+        $stmt = mysqli_stmt_init($conn);
 
-if(!mysqli_stmt_prepare($stmt,$query))
-{
-    echo "SQL prepare failed";
-}else{
-if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Building_code,$Name,$Type,$img['Image'],$oldID)){
-    echo "bind failed";
+        if(!mysqli_stmt_prepare($stmt,$query))
+        {
+            echo "SQL prepare failed";
+        }else{
+        if(!mysqli_stmt_bind_param($stmt,"sssss",$ID,$Building_code,$Name,$Type,$oldID)){
+            echo "bind failed";
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            echo "exec failed";
+        }
+
 }
-if(!mysqli_stmt_execute($stmt)){
-    echo "exec failed";
-}
-
-for($k = 0; $k<sizeof($tempname);$k++){
-
-    if(move_uploaded_file($tempname[$k],$folder.$filename[$k]))
-   {
-      //do nothing
-   }
-   else{
-       echo "Image upload error";
-       die();
-   }
-}
-
-header("Location: modify");
 }
 }
 ?>
