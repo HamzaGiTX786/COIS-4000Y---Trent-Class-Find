@@ -78,7 +78,7 @@ $folder = WEBROOT."www_data/img/";
         }
     }
 
-    if (!isset($Distance) || strlen($Distance) === 0 || $Distance < 0)
+    if (!isset($Distance) || strlen($Distance) === 0 || $Distance < 0 || !is_numeric($Distance))
     {
         $errors['Distance'] = true;
     }

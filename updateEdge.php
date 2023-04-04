@@ -92,7 +92,7 @@ if (!isset($Description) || strlen($Description) === 0) // make sure a username 
     $errors['Description'] = true;
 }
 
-if (!isset($Distance) || strlen($Distance) === 0 || $Distance < 0) // make sure a username was entered
+if (!isset($Distance) || strlen($Distance) === 0 || $Distance < 0 || !is_numeric($Distance)) // make sure a username was entered
 {
     $errors['Distance'] = true;
 }
