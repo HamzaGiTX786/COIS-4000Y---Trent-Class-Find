@@ -85,6 +85,26 @@ if (!isset($ID) || strlen($ID) === 0) // make sure a username was entered
 {
     $errors['ID'] = true;
 }
+else{
+    $qcheckroom = "SELECT RoomCode FROM Room WHERE RoomCode =?";
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt,$qcheckroom))
+    {
+        echo "SQL prepare failed";
+    }
+    else{
+        if(!mysqli_stmt_bind_param($stmt,"s",$ID)){
+            echo "bind failed"; 
+        } 
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result); // get output for the searched item
+    }
+
+    if($row){
+        $errors['same'] = true;
+    }
+}
 
 if (!isset($Building_code) || strlen($Building_code) === 0) // make sure a username was entered
 {
@@ -229,6 +249,8 @@ else if(count($errors) === 0){
         <label for="newID">Room Code:</label>
         <input type="text" name="newID"  value="<?php echo $row['RoomCode']; ?>">
         <input type="text" class="hidden" name="oldID"  value="<?= $row['RoomCode']; ?>">
+        <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please an ID for the Edge</span>
+        <span class="error <?=!isset($errors['same']) ? 'hidden' : "";?>">An edge with the same ID already exist, please a unique ID for the edge </span>
         </div>
 
 
@@ -240,12 +262,14 @@ else if(count($errors) === 0){
             <option value="<?=$build[0]?>"><?=$build[1]?></option>
         <?php endforeach; ?>
         </select>
+        <span class="error <?=!isset($errors['Building_code']) ? 'hidden' : "";?>">Please select a building for the room</span>
         </div>
 
 
         <div class="start">
         <label for="Name">Name:</label>
         <input type="text" name="Name" value="<?php echo $row['Name']; ?>">
+        <span class="error <?=!isset($errors['Name']) ? 'hidden' : "";?>">Please enter a name for the room</span>
         </div>
 
 
@@ -259,6 +283,7 @@ else if(count($errors) === 0){
             <option value="Group">Group Study Room</option>
             <option value="Commons">College Commons</option>
         </select>
+        <span class="error <?=!isset($errors['Type']) ? 'hidden' : "";?>">Please select the type of room that is created</span>
         </div>
 
         <div class="start">
