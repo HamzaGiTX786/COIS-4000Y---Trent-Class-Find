@@ -20,7 +20,7 @@ def checkerror_pickaroom():
 
     driver.find_element("name", "submit").click()
 
-    if driver.find_element("class name","error"):
+    if driver.find_element("class name","error").is_displayed():
         return "Test Passed"
     else:
         return "Test Failed"
@@ -92,8 +92,6 @@ def createnodecheck():
 
     title = driver.title
 
-    print(title)
-
     if title == "Admin Backend:Trent Class Find - Backend":
         return "Test Passed"
     else:
@@ -102,6 +100,8 @@ def createnodecheck():
 #-------------------------------------------------------------------------------------------------
 
 def makeaccount():
+
+    # login()
 
     driver.get("https://loki.trentu.ca/~classfind/4000/createaccount")
 
@@ -119,31 +119,34 @@ def makeaccount():
     driver.find_element("id", "updateimage").send_keys("Yes")
 
     driver.find_element("name", "submit").click()
-    
-    
-    if driver.find_element("class name","error"):
-        print("Test Passed")
+
+    title = driver.title
+
+    if title == "Admin Backend:Trent Class Find - Backend":
+        return "Test Passed"
     else:
-        print("Test Failed")
+        return "Test Failed"
 
 
 
-#checkerror_pickaroom()
-# print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
-# print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
-# print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
-# print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
+print("Pickaroom error test ->",checkerror_pickaroom())
+print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
+print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
+print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
+print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
 
-# print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
-# print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
-# print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
-# print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
-# print("Page without Get: delete.php ->",pageswithoutget("delete.php"))
-# print("Page without Get: deleteBuilding.php ->",pageswithoutget("deleteBuilding.php"))
-# print("Page without Get: deleteEdge.php ->",pageswithoutget("deleteEdge.php"))
-# print("Page without Get: deleteRoom.php ->",pageswithoutget("deleteRoom.php"))
+print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
+print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
+print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
+print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
+print("Page without Get: delete.php ->",pageswithoutget("delete.php"))
+print("Page without Get: deleteBuilding.php ->",pageswithoutget("deleteBuilding.php"))
+print("Page without Get: deleteEdge.php ->",pageswithoutget("deleteEdge.php"))
+print("Page without Get: deleteRoom.php ->",pageswithoutget("deleteRoom.php"))
 
-print(createnodecheck())
+print("Make a Node ->",createnodecheck())
+
+print("Create an account ->",makeaccount())
 
 
 
