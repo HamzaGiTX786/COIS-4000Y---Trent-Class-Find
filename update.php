@@ -129,24 +129,6 @@ else{
     }
     }
     }
-    // else{
-    //     $query = "UPDATE Node SET ID=?,Location=?,Name=?,Building_code=? WHERE ID=?"; //select the row of the table with the given username
-    //     $stmt = mysqli_stmt_init($conn);
-
-    //     if(!mysqli_stmt_prepare($stmt,$query))
-    //     {
-    //         echo "SQL prepare failed";
-    //     }else{
-    //         if(!mysqli_stmt_bind_param($stmt,"sssss",$ID,$Location,$Name,$Building_code,$oldID)){
-    //             echo "bind failed";
-    //         }
-    //         if(!mysqli_stmt_execute($stmt)){
-    //             echo "exec failed";
-    //         }else{
-    //             header("Location: modify");
-    //         }
-    //     }
-    // }
 }
 
 

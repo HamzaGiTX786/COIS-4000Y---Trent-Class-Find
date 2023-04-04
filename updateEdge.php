@@ -66,6 +66,39 @@ $End_Node = $_POST['End_Node'] ?? null;
 $Description= $_POST['Description'] ?? null;
 $Distance= $_POST['Distance'] ?? null; 
 
+if (!isset($oldID) || strlen($oldID) === 0) // make sure a username was entered
+{
+    header("Location: modify");
+    die();
+}
+
+if (!isset($ID) || strlen($ID) === 0) // make sure a username was entered
+{
+    $errors['ID'] = true;
+}
+
+if (!isset($Start_Node) || strlen($Start_Node) === 0) // make sure a username was entered
+{
+    $errors['Start_Node'] = true;
+}
+
+if (!isset($End_Node) || strlen($End_Node) === 0) // make sure a username was entered
+{
+    $errors['End_Node'] = true;
+}
+
+if (!isset($Description) || strlen($Description) === 0) // make sure a username was entered
+{
+    $errors['Description'] = true;
+}
+
+if (!isset($Distance) || strlen($Distance) === 0 || $Distance < 0) // make sure a username was entered
+{
+    $errors['Distance'] = true;
+}
+
+
+if(isset($_FILES['updateimage']) && count($errors) === 0){
 
 $tempname = array();
 $filename = array();
@@ -138,6 +171,25 @@ $folder = WEBROOT."www_data/img/";
     header("Location: modify");
     }
 
+}
+else if(count($errors) === 0){
+        $query = "UPDATE Edge SET ID=?,Start_Node=?,End_Node=?,Description=?,Distance=? WHERE ID=?"; //select the row of the table with the given username
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt,$query))
+        {
+            echo "SQL prepare failed";
+        }else{
+            if(!mysqli_stmt_bind_param($stmt,"ssssss",$ID,$Start_Node,$End_Node,$Description,$Distance,$oldID)){
+                echo "bind failed";
+            }
+            if(!mysqli_stmt_execute($stmt)){
+                echo "exec failed";
+            }else{
+                header("Location: modify");
+            }
+        }
+}
 }
 ?>
 
