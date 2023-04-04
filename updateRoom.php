@@ -75,6 +75,32 @@ $Building_code = $_POST['Building_code'] ?? null;
 $Name = $_POST['Name'] ?? null;
 $Type= $_POST['Type'] ?? null;
 
+if (!isset($oldID) || strlen($oldID) === 0) // make sure a username was entered
+{
+    header("Location: modify");
+    die();
+}
+
+if (!isset($ID) || strlen($ID) === 0) // make sure a username was entered
+{
+    $errors['ID'] = true;
+}
+
+if (!isset($Building_code) || strlen($Building_code) === 0) // make sure a username was entered
+{
+    $errors['Building_code'] = true;
+}
+
+if (!isset($Name) || strlen($Name) === 0) // make sure a username was entered
+{
+    $errors['Name'] = true;
+}
+
+if (!isset($Type) || strlen($Type) === 0) // make sure a username was entered
+{
+    $errors['Type'] = true;
+}
+
 $tempname = array();
 $filename = array();
 

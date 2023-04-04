@@ -229,30 +229,36 @@ else if(count($errors) === 0){
     <label for="newID">New ID:</label>
     <input type="text" name="newID"  value="<?php echo $row['ID']; ?>">
     <input type="text" class="hidden" name="oldID"  value="<?= $row['ID']; ?>">
+    <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please an ID for the Edge</span>
     </div>
 
 
     <div class="start">
     <label for="Start_Node">Start Node:</label>
     <input type="text" name="Start_Node" value="<?php echo $row['Start_Node']; ?>">
+    <span class="error <?=!isset($errors['Start_Node']) ? 'hidden' : "";?>">Please select a starting node to modify the route</span>
     </div>
 
 
     <div class="start">
     <label for="End_Node">End Node:</label>
     <input type="text" name="End_Node" value="<?php echo $row['End_Node']; ?>">
+    <span class="error <?=!isset($errors['End_Node']) ? 'hidden' : "";?>">Please select an ending node to modify the route</span>
     </div>
 
 
     <div class="start">
     <label for="">Description:</label>
     <textarea name="Description" ><?php echo $row['Description'];?></textarea>
+    <span class="error <?=!isset($errors['Description']) ? 'hidden' : "";?>">Please a description for the nodes</span>
+    
     </div>
 
 
     <div class="start">
     <label for="Distance">Distance:</label>
     <input type="number" name="Distance" value="<?php echo $row['Distance']; //try jsondecode the row first ?>">
+    <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter a positive distance for the route</span>
     </div>
 
     <div class="start">
