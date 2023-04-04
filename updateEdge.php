@@ -76,26 +76,6 @@ if (!isset($ID) || strlen($ID) === 0) // make sure a username was entered
 {
     $errors['ID'] = true;
 }
-else{
-    $qcheck = "SELECT ID FROM Edge WHERE ID = ?";
-    $stmt = mysqli_stmt_init($conn);
-    if(!mysqli_stmt_prepare($stmt,$qcheck))
-    {
-        echo "SQL prepare failed";
-    }
-    else{
-        if(!mysqli_stmt_bind_param($stmt,"s",$ID)){
-            echo "bind failed"; 
-        } 
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $row = mysqli_fetch_assoc($result); // get output for the searched item
-    }
-
-    if($row){
-        $errors['same'] = true;
-    }
-}
 
 if (!isset($Start_Node) || strlen($Start_Node) === 0) // make sure a username was entered
 {
@@ -252,7 +232,6 @@ else if(count($errors) === 0){
     <input type="text" name="newID"  value="<?php echo $row['ID']; ?>">
     <input type="text" class="hidden" name="oldID"  value="<?= $row['ID']; ?>">
     <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please an ID for the Edge</span>
-    <span class="error <?=!isset($errors['same']) ? 'hidden' : "";?>">An edge with the same ID already exist, please a unique ID for the edge </span>
     </div>
 
 
