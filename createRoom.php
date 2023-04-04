@@ -166,7 +166,7 @@ if (isset($_POST['submit']))
 
                     <div class="start">
                         <label for="Room_Code">Room Code</label>
-                        <input type="text" name="Room_Code" id="Room_Code" placeholder="Enter the room code" value="" required/>
+                        <input type="text" name="Room_Code" id="ID" placeholder="Enter the room code" value="" required/>
                         <span class="error <?=!isset($errors['Room_Code']) ? 'hidden' : "";?>">Please enter Room Code</span>
                         <span class="error <?=!isset($errors['sameID']) ? 'hidden' : "";?>">There exist a room with the same code, please enter another code for the room</span>
                     </div>

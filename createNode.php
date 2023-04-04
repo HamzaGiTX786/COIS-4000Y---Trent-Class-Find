@@ -64,6 +64,11 @@ $building_code= $_POST['building'] ?? null;
         $errors['Neighbours'] = true;
     }
 
+    if (!isset($building_code) || strlen($building_code) === 0) 
+    {
+        $errors['building_code'] = true;
+    }
+
     $qnode = "SELECT ID FROM Node WHERE ID=?";
     $stmt = mysqli_stmt_init($conn);
     if(!mysqli_stmt_prepare($stmt,$qnode))
@@ -142,16 +147,19 @@ $building_code= $_POST['building'] ?? null;
                          <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please enter Node ID</span>
                          <span class="error <?=!isset($errors['sameID']) ? 'hidden' : "";?>">There exist a node with the same ID, please another ID for the node</span>
                     </div>
+
                     <div class="start">
                         <label for="Location">Location</label>
                         <input type="text" name="Location" id="Location" placeholder="Enter Node Location" value="" required />
                          <span class="error <?=!isset($errors['Location']) ? 'hidden' : "";?>">Please enter Node Location</span>
                     </div>
+
                     <div class="start">
                         <label for="Name">Name</label>
                         <input type="text" name="Name" id="Name" placeholder="Enter Node Name" value="" required />
                          <span class="error <?=!isset($errors['Name']) ? 'hidden' : "";?>">Please enter Node Name</span>
                     </div>
+
                     <div class="start">
                     <label for="building">Building</label>
                         <select name="building" id="building" value="" required>
@@ -160,7 +168,9 @@ $building_code= $_POST['building'] ?? null;
                             <option value="<?=$build[0]?>"><?=$build[1]?></option>
                             <?php endforeach; ?>
                         </select>
+                        <span class="error <?=!isset($errors['building_code']) ? 'hidden' : "";?>">Please select the building where the Node is Located</span>
                     </div>
+
                     <div class="start">
                         <label for="Neighbours">Neighbours:</label>
                         <?php foreach($nodes as $node):?>
@@ -171,6 +181,7 @@ $building_code= $_POST['building'] ?? null;
                         <?php endforeach; ?>
                          <span class="error <?=!isset($errors['Neighbours']) ? 'hidden' : "";?>">Please enter Node Neighbours ID</span>
                     </div>
+                    
                     <div id="buttons">    
                     <button type="submit" name="submit">Create Node</button>
                     </div>

@@ -14,7 +14,27 @@ if (isset($_POST['submit']))
     if (!isset($code) || strlen($code) === 0) 
     {
         $errors['code'] = true;
+    }else{
+        $qbuild = "SELECT Code FROM Buildings WHERE Code = ?";
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$qbuild))
+        {
+        echo "SQL prepare failed";
+        }
+        else{
+        if(!mysqli_stmt_bind_param($stmt,"s",$code)){
+                echo "bind failed"; 
+            } 
+        mysqli_stmt_execute($stmt);
+        $result_node = mysqli_stmt_get_result($stmt);
+        $n = mysqli_fetch_assoc($result_node); // get output for the searched item
+        }
+
+        if($n){
+            $errors['sameID'] = true;
+        }
     }
+
     if (!isset($Building_Name) || strlen($Building_Name) === 0) 
     {
         $errors['name'] = true;
@@ -75,8 +95,9 @@ if (isset($_POST['submit']))
         
                     <div class="start">
                         <label for="code">Code</label>
-                        <input type="text" name="code" id="code" placeholder="Enter building code" value="" required />
+                        <input type="text" name="code" id="ID" placeholder="Enter building code" value="" required />
                          <span class="error <?=!isset($errors['code']) ? 'hidden' : "";?>">Please enter building code</span>
+                         <span class="error <?=!isset($errors['sameID']) ? 'hidden' : "";?>">There exist a building with the same code, please a unique code for the buidling</span>
                     </div>
                     <div class="start">
                         <label for="name">Name</label>

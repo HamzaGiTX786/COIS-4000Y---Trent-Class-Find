@@ -54,15 +54,6 @@ def pageswithoutget(page):
     
 #------------------------------------------------------------------------------------------------------
 
-'''
-def checkdeleteedeg():
-    driver.get("https://loki.trentu.ca/~classfind/4000/modify")
-
-   # link = driver.
-'''
-
-#-------------------------------------------------------------------------------------------------
-
 def login():
     driver.get("https://loki.trentu.ca/~classfind/4000/admin")
 
@@ -127,26 +118,48 @@ def makeaccount():
     else:
         return "Test Failed"
 
+#-------------------------------------------------------------------------
+
+def sameID(page,key):
+    driver.get(f"https://loki.trentu.ca/~classfind/4000/{page}")
+
+    driver.find_element("id","ID").send_keys(key)
+
+    driver.find_element("name","submit").click()
+
+    if driver.find_element("tag name","span").is_displayed():
+        return "Test Passed"
+    else:
+        return "Test Failed"
 
 
-print("Pickaroom error test ->",checkerror_pickaroom())
-print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
-print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
-print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
-print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
+#-------------------------------------------------------------------------------------------------
 
-print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
-print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
-print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
-print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
-print("Page without Get: delete.php ->",pageswithoutget("delete.php"))
-print("Page without Get: deleteBuilding.php ->",pageswithoutget("deleteBuilding.php"))
-print("Page without Get: deleteEdge.php ->",pageswithoutget("deleteEdge.php"))
-print("Page without Get: deleteRoom.php ->",pageswithoutget("deleteRoom.php"))
+login()
+# print("Pickaroom error test ->",checkerror_pickaroom())
+# print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
+# print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
+# print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
+# print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
 
-print("Make a Node ->",createnodecheck())
+# print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
+# print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
+# print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
+# print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
+# print("Page without Get: delete.php ->",pageswithoutget("delete.php"))
+# print("Page without Get: deleteBuilding.php ->",pageswithoutget("deleteBuilding.php"))
+# print("Page without Get: deleteEdge.php ->",pageswithoutget("deleteEdge.php"))
+# print("Page without Get: deleteRoom.php ->",pageswithoutget("deleteRoom.php"))
 
-print("Create an account ->",makeaccount())
+# print("Make a Node ->",createnodecheck())
+
+# print("Create an account ->",makeaccount())
+
+print("Create a node with an already exsisting ID: createNode.php and key = ccm ->",sameID("createNode","ccm"))
+print("Creating a building with an already exsisting ID: createBuilding.php and key = tscm ->",sameID("createBuilding","tscm"))
+print("Creating a room with an already exsisting ID: createRoom.php anad key = TS000 ->",sameID("createRoom","TS000"))
+
+
 
 
 
