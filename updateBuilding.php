@@ -64,22 +64,49 @@ $Name = $_POST['Name'] ?? null;
 $numroom = $_POST['No_of_rooms'] ?? null;
 $geo= $_POST['Geo-location'] ?? null;
 
+    if (!isset($oldID) || strlen($oldID) === 0) // make sure a username was entered
+    {
+        $errors['oldID'] = true;
+    }
 
-$query = "UPDATE Buildings SET Code=?,Name=?,No_of_rooms=?,Geo_location=? WHERE Code=?"; //select the row of the table with the given username
-$stmt = mysqli_stmt_init($conn);
-if(!mysqli_stmt_prepare($stmt,$query))
-{
-    echo "SQL prepare failed";
-}else{
-if(!mysqli_stmt_bind_param($stmt,"sssss",$ID,$Name,$numroom,$geo,$oldID)){
-    echo "bind failed";
-}
-if(!mysqli_stmt_execute($stmt)){
-    echo "exec failed";
-}
-header("Location: modify");
-}
+    if (!isset($ID) || strlen($ID) === 0) // make sure a username was entered
+    {
+        $errors['ID'] = true;
+    }
 
+    if (!isset($Name) || strlen($Name) === 0) // make sure a username was entered
+    {
+        $errors['Name'] = true;
+    }
+
+    if (!isset($numroom) || strlen($numroom) === 0 || $numroom < 0) // make sure a username was entered
+    {
+        $errors['numroom'] = true;
+    }
+
+    if (!isset($geo) || strlen($geo) === 0) // make sure a username was entered
+    {
+        $errors['geo'] = true;
+    }
+
+    if(count($errors) === 0){
+
+        $query = "UPDATE Buildings SET Code=?,Name=?,No_of_rooms=?,Geo_location=? WHERE Code=?"; //select the row of the table with the given username
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$query))
+        {
+            echo "SQL prepare failed";
+        }else{
+        if(!mysqli_stmt_bind_param($stmt,"sssss",$ID,$Name,$numroom,$geo,$oldID)){
+            echo "bind failed";
+        }
+        if(!mysqli_stmt_execute($stmt)){
+            echo "exec failed";
+        }
+        header("Location: modify");
+        }
+
+    }
 }
 
 
@@ -116,21 +143,25 @@ header("Location: modify");
         <div class="start">
         <label for="new_code">Code:</label>
         <input type="text" name="new_code" id="new_code" value="<?php echo $row['Code']; ?>">
+        <span class="error <?=!isset($errors['ID']) ? 'hidden' : "";?>">Please a code for the building</span>
         </div>
 
         <div class="start">
         <label for="Name">Name:</label>
         <input type="text" name="Name" value="<?php echo $row['Name']; ?>">
+        <span class="error <?=!isset($errors['Name']) ? 'hidden' : "";?>">Please a name for the building</span>
         </div>
 
         <div class="start">
         <label for="No_of_rooms">Number of Rooms:</label>
         <input type="number" name="No_of_rooms" value="<?php echo $row['No_of_rooms']; ?>">
+        <span class="error <?=!isset($errors['numroom']) ? 'hidden' : "";?>">Please enter a number greater than 0 for the number of rooms for the bulding contains.</span>
         </div>
 
         <div class="start">
         <label for="Geo-location">Geo-location:</label>
         <input type="text" name="Geo-location" value="<?php echo ($row['Geo_location']); ?>">
+        <span class="error <?=!isset($errors['geo']) ? 'hidden' : "";?>">Please a Geo-Location for the building</span>
         </div>
 
         <div id="buttons">    
