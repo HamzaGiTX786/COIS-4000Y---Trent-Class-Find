@@ -121,7 +121,7 @@ button:hover{
     padding-right: 2em;
 }
 
-.startnend input,.buildingselector select,form input{
+.startnend input,.buildingselector select,form input,form select,form textarea{
     border: .2em solid black;
     border-radius: .5em;
     padding: .5em;
@@ -288,5 +288,14 @@ a{
 }
 
 .route li{
+    display: flex;
     padding: 1em;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.route img{
+    width: 850px;
+    height: 800px;
 }

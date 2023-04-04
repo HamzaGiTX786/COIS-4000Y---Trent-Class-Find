@@ -169,7 +169,7 @@ if(isset($_POST['submit'])){
                 <?php if(!in_array($img,$descript)):?>
                 <img src="http://loki.trentu.ca/~classfind/www_data/img/<?= $img?>" alt="Image of route">
                 <?php else: ?>
-                    <figcaption><?=$img?></figcaption>
+                    <figcaption><i class="fa-solid fa-hand-point-right"></i> <?=$img?></figcaption>
                 <?php endif;?>
             </li>
             <?php endforeach; ?>
