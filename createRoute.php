@@ -195,7 +195,7 @@ for($k = 0; $k<sizeof($tempname);$k++){
                     <div class="start">
                         <label for="Distance">Distance</label>
                         <input type="number" min="0" name="Distance" id="Distance" placeholder="Enter Nodes Distance" value="" required />
-                         <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter Distance between the 2 nodes</span>
+                         <span class="error <?=!isset($errors['Distance']) ? 'hidden' : "";?>">Please enter a positive number for the distance between the 2 nodes</span>
                     </div>
 
                     <div class="start">
@@ -208,7 +208,6 @@ for($k = 0; $k<sizeof($tempname);$k++){
                         <label for="image">Image(s)</label>
                         <input type="file" id="image" name="image[]" multiple>
                          <span class="error <?=!isset($errors['image']) ? 'hidden' : "";?>">Please Upload Images</span>
-
                     </div>
 
                     <div id="buttons">
