@@ -155,8 +155,8 @@ login()
 
 # print("Create an account ->",makeaccount())
 
-print("Create a node with an already exsisting ID: createNode.php and key = ccm ->",sameID("createNode","ccm"))
-print("Creating a building with an already exsisting ID: createBuilding.php and key = tscm ->",sameID("createBuilding","tscm"))
+print("Create a node with an already exsisting ID: createNode.php and key = ccm ->",sameID("createNode","ccm")) #-> test gives wrong answer
+print("Creating a building with an already exsisting ID: createBuilding.php and key = tscm ->",sameID("createBuilding","tscm"))#-> test gives wrong answer
 print("Creating a room with an already exsisting ID: createRoom.php anad key = TS000 ->",sameID("createRoom","TS000"))
 
 

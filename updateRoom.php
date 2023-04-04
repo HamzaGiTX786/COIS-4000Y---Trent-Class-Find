@@ -188,6 +188,8 @@ else if(count($errors) === 0){
         }
         if(!mysqli_stmt_execute($stmt)){
             echo "exec failed";
+        }else{
+            header("Location: modify");
         }
 
 }
@@ -217,9 +219,7 @@ else if(count($errors) === 0){
     <main>
 <form name="updateroom" method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']?>">
 <h2>Update Room</h2>
-        <div>
-            <?php if(isset($message)) { echo $message; } ?> 
-        </div>
+
 
         <div>
         <a href="modify.php">Modify List</a>    

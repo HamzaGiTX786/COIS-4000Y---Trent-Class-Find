@@ -102,8 +102,9 @@ $geo= $_POST['Geo-location'] ?? null;
         }
         if(!mysqli_stmt_execute($stmt)){
             echo "exec failed";
-        }
-        header("Location: modify");
+        }else{
+            header("Location: modify");
+            }
         }
 
     }
