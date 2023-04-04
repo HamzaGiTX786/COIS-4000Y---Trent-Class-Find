@@ -250,6 +250,7 @@ nav{
 
 nav a{
     color: #fff;
+    text-shadow: 0.1em 0px 1px #333;
     text-decoration: none;
     text-align: center;
 }
@@ -263,6 +264,7 @@ nav ul{
 nav li{
     padding-bottom: 1.5em;
     color: #fff;
+    text-shadow: 0.1em 0px 1px #333;
 }
 
 #navmenu{
@@ -298,4 +300,17 @@ a{
 .route img{
     width: 850px;
     height: 800px;
+}
+
+.action {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+
+.action a,.action a:hover{
+    color: #fff;
+    padding: .5em;
+    text-shadow: 0.1em 0px 1px #333;
+    cursor: pointer;
 }

@@ -221,9 +221,9 @@ else if(count($errors) === 0){
 <h2>Update Room</h2>
 
 
-        <div>
-        <a href="modify.php">Modify List</a>    
-        <a href="deleteRoom.php?room_ID=<?php echo  $row['RoomCode']; ?>">Delete</a>
+        <div class="action start">
+        <a href="modify.php"><i class="fa-solid fa-pen-to-square"></i>Modify List</a>    
+        <a href="deleteRoom.php?room_ID=<?php echo  $row['RoomCode']; ?>"><i class="fa-solid fa-eraser"></i>Delete</a>
         </div>
 
         <div class="start">

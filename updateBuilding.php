@@ -136,9 +136,9 @@ $geo= $_POST['Geo-location'] ?? null;
         
         <h2>Update Building</h2>
 
-        <div class="start">
-        <a href="modify.php">Modify List</a>    
-        <a href="deleteBuilding.php?build_ID=<?php echo $row['Code']; ?>">Delete</a>
+        <div class="action start">
+        <a href="modify.php"><i class="fa-solid fa-pen-to-square"></i>Modify List</a>    
+        <a href="deleteBuilding.php?build_ID=<?php echo $row['Code']; ?>"><i class="fa-solid fa-eraser"></i>Delete</a>
         </div>
 
         <div class="start">

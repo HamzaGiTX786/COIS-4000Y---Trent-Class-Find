@@ -153,15 +153,12 @@ else{
         include 'includes/nav.php';
     ?>
     <main>
-    <div>
-        <?php if(isset($message)) { echo $message; } ?>
-    </div>
-    
     <form name="updatenode" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+
     <h2>Update Node</h2>
-        <div class="start">
-        <a href="modify.php">Modify List</a>    
-        <a href="delete.php?nodeID=<?php echo $row['ID']; ?>">Delete Node</a>
+        <div class="action start">
+        <a href="modify.php"><i class="fa-solid fa-pen-to-square"></i>Modify List</a>    
+        <a href="delete.php?nodeID=<?php echo $row['ID']; ?>"><i class="fa-solid fa-eraser"></i>Delete Node</a>
         </div>
 
     <div class="start">

@@ -219,9 +219,9 @@ else if(count($errors) === 0){
 
     <h2>Update Route</h2>
 
-    <div class="start">
-    <a href="modify.php">Modify List</a>    
-    <a href="deleteEdge.php?ID=<?php echo $row['ID'] ?>">Delete</a>
+    <div class="action start">
+    <a href="modify.php"><i class="fa-solid fa-pen-to-square"></i>Modify List</a>    
+    <a href="deleteEdge.php?ID=<?php echo $row['ID'] ?>"><i class="fa-solid fa-eraser"></i>Delete</a>
     </div>
 
     <div class="start">
