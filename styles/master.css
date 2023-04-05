@@ -76,6 +76,21 @@ i{
     padding: .2em;
 }
 
+.navmenu {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-top: 2em;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* to make a cursor appear over the nav chevron line */
+.navmenu:hover{
+    cursor: pointer;
+  }
+
 .start,.end,.submit{
     padding: .5em;
     color: white;
@@ -242,10 +257,14 @@ section i{
 nav{
     justify-content: center;
     background-color:#B15533;
-    width: max-content;
+    width: 14em;
     padding: 0;
+    padding-top: 1.2em;
     min-height: 100%;
     font-family: "museo-sans","Arial";
+    border-right: #fff;
+    border-style: solid;
+    border-right-width: 0.5 em;
 }
 
 nav a{
@@ -258,13 +277,19 @@ nav a{
 nav ul{
     margin: 0;
     padding: 1em;
-    padding-top: 2em;
+    padding-top: 1em;
+    padding-bottom: 0;
 }
 
 nav li{
-    padding-bottom: 1.5em;
+    padding-top: 0.7em;
+    padding-bottom: 1em;
+    margin-left: 1em;
+    padding-left: 1em;
     color: #fff;
     text-shadow: 0.1em 0px 1px #333;
+    border-left: rgb(21, 71, 52);
+    border-style: solid;
 }
 
 #navmenu{

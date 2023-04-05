@@ -59,6 +59,8 @@ exit();
         <li><a href="modify.php"><i class="fa-solid fa-pen-to-square"></i>Modify/Delete</a></li>
         <?php endif; ?>
 
+        <li><a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+
     </ol>
        
 
