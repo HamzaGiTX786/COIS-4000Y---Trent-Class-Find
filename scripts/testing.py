@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 import time
+import random
 
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -29,11 +30,13 @@ def checkerror_pickaroom():
 
 def sqlcheck(page,id):
 
-    driver.get(f"https://loki.trentu.ca/~classfind/4000/{page}?{id}= SELECT * FROM Users;")
+    sqlcommands = ['SELECT','DROP','UPDATE','DELETE']
 
-    check = driver.find_element("tag name","h2").text
+    driver.get(f"https://loki.trentu.ca/~classfind/4000/{page}?{id}= {random.choice(sqlcommands)} * FROM Users;")
 
-    if check == "Modify & Delete":
+    check = driver.find_elements("tag name","h2")
+
+    if check[2].text == "Modify & Delete":
         return "Test Passed"
     else:
         return "Test Failed"
@@ -45,9 +48,9 @@ def pageswithoutget(page):
 
     driver.get(f"https://loki.trentu.ca/~classfind/4000/{page}")
 
-    check = driver.find_element("tag name","h2").text
+    check = driver.find_elements("tag name","h2")
 
-    if check == "Modify & Delete":
+    if check[2].text == "Modify & Delete":
         return "Test Passed"
     else:
         return "Test Failed"
@@ -66,7 +69,7 @@ def login():
 
 def createnodecheck():
 
-    login()
+    # login()
 
     driver.get("https://loki.trentu.ca/~classfind/4000/createNode.php")
 
@@ -136,28 +139,30 @@ def sameID(page,key):
 #-------------------------------------------------------------------------------------------------
 
 login()
-# print("Pickaroom error test ->",checkerror_pickaroom())
-# print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
-# print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
-# print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
-# print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
+print("Pickaroom error test ->",checkerror_pickaroom())
+print("SQL Injectiong Test: updateEdge.php ->",sqlcheck("updateEdge","Room_Code"))
+print("SQL Injectiong Test: updateRoom.php ->",sqlcheck("updateRoom","Room_Code"))
+print("SQL Injectiong Test: update.php ->",sqlcheck("update","ID"))
+print("SQL Injectiong Test: updateBuilding.php ->",sqlcheck("updateBuilding","ID"))
 
-# print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
-# print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
-# print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
-# print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
-# print("Page without Get: delete.php ->",pageswithoutget("delete.php"))
-# print("Page without Get: deleteBuilding.php ->",pageswithoutget("deleteBuilding.php"))
-# print("Page without Get: deleteEdge.php ->",pageswithoutget("deleteEdge.php"))
-# print("Page without Get: deleteRoom.php ->",pageswithoutget("deleteRoom.php"))
+print("Page without Get: updateEdge.php ->",pageswithoutget("update.php"))
+print("Page without Get: updateEdge.php ->",pageswithoutget("updateEdge.php"))
+print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
+print("Page without Get: updateBuilding.php ->",pageswithoutget("updateBuilding.php"))
+print("Page without Get: delete.php ->",pageswithoutget("delete.php"))
+print("Page without Get: deleteBuilding.php ->",pageswithoutget("deleteBuilding.php"))
+print("Page without Get: deleteEdge.php ->",pageswithoutget("deleteEdge.php"))
+print("Page without Get: deleteRoom.php ->",pageswithoutget("deleteRoom.php"))
 
-# print("Make a Node ->",createnodecheck())
+print("Make a Node ->",createnodecheck())
 
-# print("Create an account ->",makeaccount())
+print("Create an account ->",makeaccount())
+
+print("Creating a room with an already exsisting ID: createRoom.php anad key = TS000 ->",sameID("createRoom","TS000"))
 
 print("Create a node with an already exsisting ID: createNode.php and key = ccm ->",sameID("createNode","ccm")) #-> test gives wrong answer
 print("Creating a building with an already exsisting ID: createBuilding.php and key = tscm ->",sameID("createBuilding","tscm"))#-> test gives wrong answer
-print("Creating a room with an already exsisting ID: createRoom.php anad key = TS000 ->",sameID("createRoom","TS000"))
+
 
 
 
